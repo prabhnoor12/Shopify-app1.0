@@ -28,3 +28,6 @@ sendgrid
 twilio
 bcrypt
 beautifulsoup4
+deploys
+dotenv
+slowapi
