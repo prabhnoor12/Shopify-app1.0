@@ -158,7 +158,6 @@ async def init_db():
 # Optional: Add logging for connection pool events
 @event.listens_for(Engine, "connect")
 def connect(dbapi_connection, connection_record):
-            print_db_url_and_test()
     logging.info("New DB connection")
 
 
