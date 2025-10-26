@@ -1,0 +1,94 @@
+/* Chart container for Recharts BarChart */
+/* Chart container for Recharts BarChart */
+.category-performance-chart-container {
+	width: 100%;
+	height: 320px;
+	margin-bottom: 40px; /* Increased spacing below chart */
+	background: linear-gradient(135deg, #f0f4ff 0%, #f8e8ff 100%); /* Soft gradient */
+	border: 1.5px solid #e3e3e3;
+	border-radius: 16px;
+	padding: 24px 24px 22px 24px; /* More spacious padding */
+	box-sizing: border-box;
+	overflow-x: auto;
+	transition: background 0.3s;
+	position: relative;
+}
+
+/* Legend spacing and font fix */
+.category-performance-legend {
+	margin-top: 18px !important;
+	font-size: 20px !important;
+	font-weight: 600 !important;
+	color: #23272f !important;
+	display: flex;
+	justify-content: center;
+	gap: 32px;
+}
+
+/* Prevent font clashing and improve layout */
+.category-performance-chart-container .recharts-legend-item-text {
+	font-family: 'Inter', 'Segoe UI', Arial, sans-serif !important;
+	font-size: 15px !important;
+	font-weight: 600 !important;
+	color: #23272f !important;
+}
+.category-performance {
+	margin: 24px 2px;
+	padding:  8px;
+	font-family: 'Inter', sans-serif;
+
+}
+/* Typography now handled by AnalyticsCard.css */
+/* Table wrapper spacing increased for separation from chart */
+.category-performance-table-wrapper {
+  overflow-x: auto;
+  margin-top: 32px;
+}
+.category-performance-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	margin-top: 8px;
+	background: #fff;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.category-performance-table th,
+.category-performance-table td {
+	border: 1px solid #e3e3e3;
+	padding: 12px 16px;
+	text-align: left;
+	background: none;
+}
+.category-performance-table th {
+	background: #f6f6f7;
+	font-weight: 600;
+	font-size: 1.06em;
+	letter-spacing: 0.03em;
+}
+@media (max-width: 600px) {
+	.category-performance {
+		padding: 0 2px;
+	}
+	.category-performance-chart-container {
+		padding: 8px 2px 4px 2px;
+		height: 220px;
+	}
+	.category-performance-table th,
+	.category-performance-table td {
+		padding: 7px 6px;
+	}
+}
+
+@media (max-width: 700px) {
+  .category-performance-chart-container {
+    height: 220px;
+    padding: 8px 2px 4px 2px;
+  }
+  .category-performance-table th,
+  .category-performance-table td {
+    padding: 7px 6px;
+    font-size: 0.95rem;
+  }
+}

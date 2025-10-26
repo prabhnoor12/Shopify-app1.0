@@ -1,0 +1,77 @@
+.seo-dashboard {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2.5rem 2rem;
+  background: linear-gradient(135deg, #f6f8fa 60%, #e3eefd 100%);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(13, 110, 253, 0.08);
+}
+.seo-dashboard h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+  color: #0d6efd;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 8px rgba(13, 110, 253, 0.08);
+}
+.seo-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.seo-tab {
+  padding: 0.85rem 1.7rem;
+  background: #f0f8ff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  color: #0d6efd;
+  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.04);
+}
+.seo-tab:hover {
+  background: #e3eefd;
+  color: #0056b3;
+  box-shadow: 0 4px 16px rgba(13, 110, 253, 0.08);
+}
+.seo-tab-active {
+  background: #0d6efd;
+  color: #fff;
+  border-bottom: 2px solid #0d6efd;
+  box-shadow: 0 6px 24px rgba(13, 110, 253, 0.12);
+}
+.seo-tab-content {
+  border: 1px solid #e0e0e0;
+  border-radius: 0 0 12px 12px;
+  background: #fff;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 2px 16px rgba(13, 110, 253, 0.06);
+  min-height: 320px;
+}
+@media (max-width: 700px) {
+  .seo-dashboard {
+    padding: 1rem 0.5rem;
+    max-width: 100%;
+    border-radius: 0;
+  }
+  .seo-tabs {
+    gap: 0.5rem;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  .seo-tab {
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    min-width: 110px;
+    flex: 0 0 auto;
+  }
+  .seo-tab-content {
+    padding: 1rem 0.5rem;
+    min-height: 200px;
+  }
+}

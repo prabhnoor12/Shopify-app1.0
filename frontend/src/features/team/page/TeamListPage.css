@@ -1,0 +1,12 @@
+.teamlistpage-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.teamlistpage-col {
+  flex: 1;
+  min-width: 340px;
+}
+.teamlistpage-list {
+  margin-top: 32px;
+}

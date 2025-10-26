@@ -1,0 +1,235 @@
+/*
+  GenerationResult.css
+  --------------------
+  This stylesheet provides layout and visual styling for the AI content generation results section.
+  It ensures generated descriptions, SEO info, and action buttons are visually clear, centered, and user-friendly.
+*/
+
+/*
+  .ai-content-results
+  -------------------
+  Main container for all generated content results. Adds padding, background, and rounded corners
+  to visually separate the results area from the rest of the UI.
+*/
+.ai-content-results {
+  margin: 32px auto 0 auto;      /* More space above, centered horizontally */
+  background-color: #f9f9f9;
+  padding: 32px 24px;            /* More padding for better spacing */
+  border-radius: 12px;           /* Slightly more rounded corners */
+  max-width: 700px;              /* Prevents the container from being too wide */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07); /* Subtle shadow for depth */
+}
+
+/*
+  Responsive adjustments for mobile screens
+*/
+@media (max-width: 800px) {
+  .ai-content-results {
+    padding: 16px 4px;
+    max-width: 100vw;
+    border-radius: 8px;
+  }
+  .ai-content-results .Polaris-Card {
+    padding: 12px 4px;
+    max-width: 98vw;
+    margin: 12px auto;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 500px) {
+  .ai-content-results {
+    padding: 4px 1vw;
+    border-radius: 5px;
+  }
+  .ai-content-results .Polaris-Card {
+    padding: 6px 2px;
+    border-radius: 4px;
+  }
+}
+
+/*
+  .ai-content-results .Polaris-Card
+  ---------------------------------
+  Styles each result card (description, SEO, etc.) with a white background, border, and shadow
+  for a clean, elevated look. Adds spacing between cards.
+*/
+.ai-content-results .Polaris-Card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 24px 32px; /* Increased padding for better alignment */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Slightly stronger shadow for depth */
+  margin: 20px auto;   /* Center cards horizontally, with vertical spacing */
+  max-width: 600px;    /* Prevents the cards from being too wide */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*
+  Responsive adjustments for mobile screens
+*/
+@media (max-width: 600px) {
+  .ai-content-results .Polaris-Card {
+    padding: 16px 8px;
+    max-width: 98vw;
+    margin: 12px auto;
+    border-radius: 8px;
+  }
+}
+
+/*
+  .save-button-container
+  ---------------------
+  Right-aligns the save button or saved status for each description, and ensures a minimum width
+  so the layout doesn't shift when toggling between button and status.
+*/
+.save-button-container {
+  min-width: 120px;
+  text-align: right;
+}
+
+/* Add a little more space below the Save button */
+.save-button-container {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+/*
+  .ai-description-center
+  ---------------------
+  Horizontally and vertically centers the generated description text within its card, and ensures
+  multi-line text is centered. Adds spacing below the description.
+*/
+.ai-description-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Add a subtle divider between description and feature-to-benefit */
+.ai-description-center {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+/*
+  Responsive adjustments for mobile screens
+*/
+@media (max-width: 600px) {
+  .ai-description-center {
+    font-size: 1rem;
+    padding: 0 2px;
+  }
+}
+
+/*
+  .ai-basic-seo
+  -------------
+  Displays basic SEO info (clarity, keyword density) in a horizontal row, centered under each description.
+  Adds spacing between info items and below the row.
+*/
+.ai-basic-seo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  color: #6b7280;
+  font-size: 0.97rem;
+}
+
+/*
+  Responsive adjustments for mobile screens
+*/
+@media (max-width: 600px) {
+  .ai-basic-seo {
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.95rem;
+  }
+}
+
+/*
+  .ai-keyword-density
+  -------------------
+  Adds extra left margin to the keyword density info so it doesn't crowd the clarity info.
+*/
+.ai-keyword-density {
+  margin-left: 12px;
+}
+
+/* Skeleton loader for async content */
+.skeleton-loader {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 37%, #f0f0f0 63%);
+  border-radius: 8px;
+  min-height: 32px;
+  animation: skeleton-loading 1.2s infinite;
+}
+@keyframes skeleton-loading {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+/* Modal/drawer base styles */
+.ai-modal, .ai-drawer {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  padding: 24px;
+  max-width: 90vw;
+  margin: 0 auto;
+  z-index: 1000;
+}
+
+/* Accessibility improvements */
+.ai-content-results [aria-label],
+.ai-content-results [role] {
+  outline: none;
+}
+
+/* Dark mode support */
+/* Remove forced dark mode overrides. Use default backgrounds and text colors. */
+
+.feature-to-benefit {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.feature-to-benefit .Polaris-Button {
+  margin-bottom: 8px;
+}
+
+.feature-benefit-textarea {
+  width: 100%;
+  min-height: 60px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #f7fafc;
+  resize: vertical;
+  transition: border 0.2s;
+}
+.feature-benefit-textarea:focus {
+  border: 1.5px solid #3182ce;
+  outline: none;
+  background: #fff;
+}
+
+.Polaris-Modal-Dialog__Container {
+  z-index: 1200;
+  max-width: 98vw !important;
+}
+
+/* Make the modal content more readable */
+.Polaris-Modal-Section {
+  padding-bottom: 0 !important;
+}

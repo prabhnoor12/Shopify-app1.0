@@ -1,0 +1,15 @@
+/* No custom styles needed for UserAccountStatus as the layout is handled by Polaris components. */
+
+.user-account-status {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.user-account-status .Polaris-Card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

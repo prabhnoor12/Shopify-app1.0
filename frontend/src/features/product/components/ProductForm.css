@@ -1,0 +1,109 @@
+/* Styles for ProductForm component */
+
+.product-form {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.product-form h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.product-form label {
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.product-form-input,
+.product-form-textarea {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #f6f6f6;
+}
+.product-form-textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+.product-form-btn {
+  background: #1a7f37;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+.product-form-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.product-form-btn:hover:not(:disabled) {
+  background: #145c27;
+}
+.product-form-preview-btn {
+  background: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  margin-left: 0.5rem;
+}
+.product-form-preview-btn:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+.product-form-reset-btn {
+  background: #c0392b;
+  color: #fff;
+}
+.product-form-reset-btn:hover:not(:disabled) {
+  background: #a93226;
+}
+.product-form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.product-form-error {
+  color: #c0392b;
+  background: #ffeaea;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.product-form-success {
+  color: #1a7f37;
+  background: #eafaf1;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.product-form-required {
+  color: #c0392b;
+  margin-left: 0.2rem;
+}
+.product-form-image-preview {
+  text-align: center;
+  margin: 1rem 0;
+}
+.product-form-image {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+}

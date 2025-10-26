@@ -1,0 +1,18 @@
+.gdpr-card {
+  padding: 16px;
+}
+
+.gdpr-title {
+  margin-bottom: 16px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.gdpr-description {
+  margin-bottom: 16px;
+  color: #637381;
+}
+
+.gdpr-banner {
+  margin-bottom: 16px;
+}

@@ -1,0 +1,7 @@
+/* User-friendly no results message for async product select */
+.product-async-select-no-results {
+  padding: 8px;
+  color: #888;
+  font-size: 14px;
+  text-align: left;
+}

@@ -1,0 +1,93 @@
+
+.product-delete-dialog {
+	position: fixed;
+	top: 0; left: 0; right: 0; bottom: 0;
+	background: rgba(0,0,0,0.25);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+.product-delete-dialog-content {
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+	padding: 2rem;
+	min-width: 350px;
+	max-width: 90vw;
+	text-align: center;
+}
+.product-delete-reason {
+	width: 100%;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+	margin: 0.7rem 0 1rem 0;
+	background: #f6f6f6;
+}
+.product-delete-actions {
+	display: flex;
+	gap: 1rem;
+	justify-content: center;
+	margin-top: 1rem;
+}
+.product-delete-btn {
+	background: #c0392b;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	padding: 0.7rem 1.2rem;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.product-delete-btn:disabled {
+	background: #ccc;
+	cursor: not-allowed;
+}
+.product-delete-btn:hover:not(:disabled) {
+	background: #a93226;
+}
+.product-cancel-btn {
+	background: #f0f0f0;
+	color: #333;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 0.7rem 1.2rem;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.product-cancel-btn:hover:not(:disabled) {
+	background: #e0e0e0;
+}
+.product-undo-btn {
+	background: #1a7f37;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	padding: 0.7rem 1.2rem;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.product-undo-btn:hover {
+	background: #145c27;
+}
+.product-delete-error {
+	color: #c0392b;
+	background: #ffeaea;
+	border-radius: 6px;
+	padding: 0.7rem 1rem;
+	margin-bottom: 0.5rem;
+	text-align: center;
+}
+.product-delete-success {
+	color: #1a7f37;
+	background: #eafaf1;
+	border-radius: 6px;
+	padding: 0.7rem 1rem;
+	margin-bottom: 0.5rem;
+	text-align: center;
+}

@@ -1,0 +1,57 @@
+.subscription-status {
+  background: #f7f8fa;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  max-width: 480px;
+  margin: 0 auto 32px auto;
+}
+.subscription-status h2 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+.subscription-status-badge {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: 8px;
+  background: #888;
+  color: #fff;
+}
+.badge-active {
+  background: #4caf50;
+}
+.badge-pending {
+  background: #ff9800;
+}
+.badge-canceled {
+  background: #f44336;
+}
+.badge-default {
+  background: #888;
+}
+.subscription-status .error {
+  color: #f44336;
+  margin-top: 12px;
+}
+.subscription-status .success {
+  color: #4caf50;
+  margin-top: 12px;
+}
+.subscription-status button {
+  margin-top: 18px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  background: #f44336;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.subscription-status button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

@@ -1,0 +1,61 @@
+/*
+  Styles for the analytics dashboard page layout and responsive grid.
+*/
+.analytics-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: #f7f8fa;
+  min-height: 100vh;
+}
+.analytics-page h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+  color: #222;
+  letter-spacing: -1px;
+}
+
+.analytics-dashboard-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+@media (max-width: 700px) {
+  .analytics-page {
+    padding: 1rem 0.5rem;
+    min-width: 0;
+  }
+  .analytics-page h1 {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    text-align: left;
+  }
+  .analytics-dashboard-grid {
+    gap: 1.2rem;
+  }
+  .analytics-card,
+  .analytics-card-section {
+    padding: 0.7rem 0.5rem;
+    border-radius: 8px;
+    box-shadow: none;
+    margin: 0;
+    min-width: 0;
+    max-width: 100vw;
+    overflow-x: auto;
+  }
+  table {
+    font-size: 0.95rem;
+    min-width: 400px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  th, td {
+    padding: 8px 6px;
+    font-size: 0.95rem;
+  }
+}

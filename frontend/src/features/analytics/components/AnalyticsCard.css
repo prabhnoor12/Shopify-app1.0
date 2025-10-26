@@ -1,0 +1,115 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body, .analytics-card, .analytics-page, .analytics-dashboard-grid {
+  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: #23272f;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+}
+
+.analytics-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  padding: 2.2rem 2.2rem 2rem 2.2rem;
+  margin-bottom: 2.5rem;
+  transition: box-shadow 0.2s;
+}
+.analytics-card:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+}
+.analytics-card-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  margin-bottom: 2.1rem;
+  color: #18181b;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+}
+.analytics-card-section {
+  margin-bottom: 2.3rem;
+}
+.analytics-card-empty {
+  text-align: center;
+  color: #888;
+  padding: 2.2rem 0 2rem 0;
+  font-size: 1.13rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 500;
+}
+.analytics-card-empty svg {
+  margin-bottom: 0.5rem;
+  opacity: 0.5;
+}
+
+table {
+  font-family: inherit;
+  font-size: 1.04rem;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+th, td {
+  font-family: inherit;
+  font-size: 1.01rem;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+}
+th {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #23272f;
+  background: #f6f6f7;
+  font-size: 1.04rem;
+  border-bottom: 2px solid #e3e3e3;
+}
+td {
+  color: #23272f;
+  font-weight: 400;
+}
+
+h2, h3, h4 {
+  font-family: inherit;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+  margin-top: 0;
+  margin-bottom: 1.1rem;
+  line-height: 1.25;
+}
+h2 {
+  font-size: 1.22rem;
+  margin-bottom: 1.3rem;
+}
+h3 {
+  font-size: 1.08rem;
+  margin-bottom: 1rem;
+}
+
+.secondary-text, .analytics-card-section p, .analytics-card-section ul, .analytics-card-section li {
+  color: #5a5a5a;
+  font-size: 0.99rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .analytics-card {
+    padding: 1.1rem;
+  }
+  .analytics-card-title {
+    font-size: 1.13rem;
+    margin-bottom: 1.1rem;
+  }
+  table, th, td {
+    font-size: 0.97rem;
+  }
+  .analytics-card-section {
+    margin-bottom: 1.2rem;
+  }
+}

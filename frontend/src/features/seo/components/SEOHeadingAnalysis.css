@@ -1,0 +1,143 @@
+/* Styles for SEOHeadingAnalysis component */
+.seo-heading-analysis {
+  padding: 2rem;
+  border: 1px solid #d4c5f9;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+  box-shadow: 0 4px 20px rgba(102, 16, 242, 0.1);
+}
+
+.seo-heading-analysis h3 {
+  color: #4c1d95;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.seo-heading-analysis form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.seo-heading-analysis input {
+  padding: 0.75rem 1rem;
+  border: 2px solid #ced4da;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.seo-heading-analysis input:focus {
+  outline: none;
+  border-color: #6610f2;
+  box-shadow: 0 0 0 3px rgba(102, 16, 242, 0.1);
+}
+
+.seo-heading-analysis button {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #6610f2 0%, #520dc2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.seo-heading-analysis button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 16, 242, 0.3);
+}
+
+.seo-heading-analysis button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.seo-heading-error {
+  color: #dc3545;
+  background: #f8d7da;
+  border: 1px solid #f5c2c7;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.heading-output {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+}
+
+.heading-output strong {
+  color: #4c1d95;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.heading-structure {
+  margin-top: 1.5rem;
+}
+
+.heading-level {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #6610f2;
+}
+
+.heading-level h4 {
+  margin: 0 0 0.5rem 0;
+  color: #4c1d95;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.heading-level ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.heading-level li {
+  padding: 0.25rem 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.heading-issues {
+  margin-top: 1.5rem;
+}
+
+.heading-issues ul {
+  list-style: none;
+  padding: 0;
+}
+
+.heading-issues li {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background: #f8d7da;
+  border-left: 4px solid #dc3545;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.heading-issues li:last-child {
+  margin-bottom: 0;
+}

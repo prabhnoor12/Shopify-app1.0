@@ -1,0 +1,50 @@
+/* Card section backgrounds and spacing for SEOAnalysis */
+.seo-analysis .analytics-card-section {
+	background: #f7f8fa;
+	border-radius: 10px;
+	margin-bottom: 18px;
+	padding: 18px 20px 14px 20px;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.seo-analysis .analytics-card-section:last-child {
+	margin-bottom: 0;
+}
+.seo-analysis h3 {
+	font-size: 1.08rem;
+	font-weight: 600;
+	margin-bottom: 0.7em;
+	color: #3a3a3a;
+}
+.seo-analysis ul {
+	margin: 0 0 0.5em 1.2em;
+	padding: 0;
+	color: #b94a48;
+	font-size: 1.01rem;
+	line-height: 1.6;
+}
+.seo-analysis ul[aria-label="SEO suggestions list"] {
+	color: #2e7d32;
+}
+.seo-analysis p {
+	margin-bottom: 0.5em;
+}
+@media (max-width: 700px) {
+	.seo-analysis .analytics-card-section {
+		padding: 10px 6px 8px 6px;
+		border-radius: 6px;
+		margin-bottom: 10px;
+	}
+	.seo-analysis h3 {
+		font-size: 1rem;
+		margin-bottom: 0.5em;
+	}
+	.seo-analysis ul {
+		font-size: 0.95rem;
+		margin-left: 0.7em;
+	}
+	.seo-analysis p {
+		font-size: 0.95rem;
+		margin-bottom: 0.3em;
+	}
+}
+/* Typography now handled by AnalyticsCard.css */

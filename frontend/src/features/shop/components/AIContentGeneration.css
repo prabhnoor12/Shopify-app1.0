@@ -1,0 +1,70 @@
+.ai-content-sync-btn {
+  margin-top: 24px;
+}
+.ai-content-title {
+  font-weight: 600;
+  font-size: 1.2em;
+  margin-bottom: 16px;
+}
+.ai-content-inputs {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ai-content-generate-btn {
+  margin-top: 16px;
+}
+.ai-content-result {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ai-content-label {
+  font-weight: 600;
+}
+.ai-content-sync-btn {
+  margin-top: 24px;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .ai-content-title {
+    font-size: 1em;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .ai-content-inputs {
+    gap: 10px;
+    padding: 0 8px;
+  }
+  .ai-content-result {
+    gap: 10px;
+    padding: 0 8px;
+  }
+  .ai-content-generate-btn,
+  .ai-content-sync-btn {
+    margin-top: 12px;
+    padding: 0 8px;
+  }
+  .ai-content-label {
+    font-size: 1em;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .ai-content-title {
+    font-size: 1.1em;
+    margin-bottom: 14px;
+  }
+  .ai-content-inputs,
+  .ai-content-result {
+    gap: 12px;
+    padding: 0 16px;
+  }
+  .ai-content-generate-btn,
+  .ai-content-sync-btn {
+    margin-top: 14px;
+    padding: 0 16px;
+  }
+}

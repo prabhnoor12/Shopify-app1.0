@@ -1,0 +1,28 @@
+Based on the product details below, generate a compelling product description.
+
+Product Title: {{ request.title }}
+Product Details: {{ request.product_details }}
+
+Instructions:
+1.  Write a product description with the following characteristics:
+    {% if request.persona %}
+    - Persona: You are writing for a specific customer persona: **{{ request.persona }}**. Adjust your vocabulary, sentence structure, and focus to appeal directly to this persona. For example, if the persona is "budget-conscious," highlight value and durability. If the persona is "luxury," focus on quality, craftsmanship, and exclusivity.
+    {% else %}
+    - Tone: {{ request.tone }}
+    {% endif %}
+    - Length: {{ request.length }}
+    - Style: {{ request.style or 'engaging' }}
+2.  If provided, incorporate these keywords naturally: {{ request.keywords|join(', ') if request.keywords else 'None' }}.
+3.  Generate a list of 5-7 relevant SEO keywords.
+4.  Generate a concise, SEO-optimized meta title (around 60 characters).
+5.  Generate an engaging meta description (around 155 characters) that encourages clicks.
+
+Return the output as a single JSON object with four keys: "description", "keywords", "meta_title", and "meta_description".
+
+Example JSON output:
+{
+  "description": "This is a sample description based on the product details.",
+  "keywords": ["keyword1", "keyword2", "keyword3"],
+  "meta_title": "Awesome Product Title | Brand Name",
+  "meta_description": "Discover the amazing features of our new product. Perfect for your needs and built to last. Shop now!"
+}

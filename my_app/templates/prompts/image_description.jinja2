@@ -1,0 +1,22 @@
+Analyze the provided product image and generate a compelling product description.
+
+Instructions:
+1.  Identify the main product, its key features, materials, and potential use cases from the image.
+2.  Write a product description with the following characteristics:
+    - Tone: {{ request.tone }}
+    - Length: {{ request.length }}
+    - Style: {{ request.style or 'engaging' }}
+3.  If provided, incorporate these keywords naturally: {{ request.keywords|join(', ') if request.keywords else 'None' }}.
+4.  Generate a list of 5-7 relevant SEO keywords based on the image.
+5.  Generate a concise, SEO-optimized meta title (around 60 characters).
+6.  Generate an engaging meta description (around 155 characters) that encourages clicks.
+
+Return the output as a single JSON object with four keys: "description" (a string), "keywords" (a list of strings), "meta_title" (a string), and "meta_description" (a string).
+
+Example JSON output:
+{
+  "description": "This is a sample description based on the image.",
+  "keywords": ["keyword1", "keyword2", "keyword3"],
+  "meta_title": "Awesome Product Title | Brand Name",
+  "meta_description": "Discover the amazing features of our new product. Perfect for your needs and built to last. Shop now!"
+}

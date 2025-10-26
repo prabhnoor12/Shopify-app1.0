@@ -1,0 +1,78 @@
+/* Chart container for Recharts BarChart */
+/* Chart container for Recharts BarChart */
+/* Chart container for Recharts BarChart (styled like CategoryPerformance) */
+.description-performance-chart-container {
+	width: 100%;
+	height: 320px;
+	margin-bottom: 40px; /* Increased spacing below chart */
+	background: linear-gradient(135deg, #f0f4ff 0%, #f8e8ff 100%); /* Soft gradient */
+	border: 1.5px solid #e3e3e3;
+	border-radius: 16px;
+	padding: 24px 24px 22px 24px; /* More spacious padding */
+	box-sizing: border-box;
+	overflow-x: auto;
+	transition: background 0.3s;
+	position: relative;
+}
+
+/* Responsive table wrapper */
+.description-performance-table-wrapper {
+	width: 100%;
+	overflow-x: auto;
+	margin-bottom: 0;
+}
+
+/* Table improvements for card containment */
+.description-performance table {
+	width: 100%;
+	min-width: 900px;
+	border-collapse: separate;
+	border-spacing: 0;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+	overflow: hidden;
+}
+.description-performance th, .description-performance td {
+	padding: 0.7em 1em;
+	white-space: nowrap;
+}
+.description-performance th {
+	background: #f6f6f7;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+.description-performance tr.baseline {
+	background: #e6f7ff;
+}
+.description-performance tr:hover {
+	background: #f0f4fa;
+}
+
+@media (max-width: 900px) {
+	.description-performance table {
+		height: 220px;
+		padding: 6px 2px 2px 2px;
+	}
+	.description-performance table {
+		min-width: 500px;
+		font-size: 0.93rem;
+	}
+	.description-performance th, .description-performance td {
+		padding: 7px 6px;
+		font-size: 0.93rem;
+	}
+	}
+
+@media (max-width: 700px) {
+	.description-performance-chart-container {
+		height: 220px;
+		padding: 6px 2px 2px 2px;
+	}
+	.description-performance table {
+		min-width: 500px;
+		font-size: 0.93rem;
+	}
+}
+/* Typography now handled by AnalyticsCard.css */

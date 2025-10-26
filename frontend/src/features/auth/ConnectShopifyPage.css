@@ -1,0 +1,68 @@
+.connect-retry-btn {
+  margin-top: 8px;
+}
+.connect-shopify-root {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #f9f9f9 60%, #e3eaff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.connect-shopify-root .Polaris-Page {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.connect-shopify-root .Polaris-Card {
+  box-shadow: 0 4px 24px rgba(80, 120, 200, 0.10), 0 1.5px 4px rgba(0,0,0,0.04);
+  border-radius: 16px;
+  border: none;
+}
+
+.connect-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.connect-store-emoji {
+  font-size: 48px;
+  color: #5c6ac4;
+}
+
+.connect-spinner {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.connect-shopify-actions {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.connect-shopify-url {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+  word-break: break-all;
+}
+
+.connect-shopify-url-text {
+  -webkit-user-select: all;
+  user-select: all;
+}
+
+.connect-desc {
+  margin: 18px 0 8px 0;
+  color: #444;
+  font-size: 1.08em;
+  text-align: center;
+}
+
+.connect-hint {
+  color: #888;
+  font-size: 0.98em;
+}

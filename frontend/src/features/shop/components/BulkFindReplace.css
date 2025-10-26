@@ -1,0 +1,104 @@
+
+.bulk-find-replace-container {
+  padding: 20px;
+}
+
+.bulk-find-replace-button {
+  margin-bottom: 20px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+}
+
+.progress-bar {
+  height: 20px;
+  background-color: #4caf50;
+  border-radius: 4px;
+  text-align: center;
+  color: white;
+}
+
+.bulk-find-replace-result {
+  margin-top: 20px;
+}
+
+.bulk-find-replace-result .Polaris-Banner {
+  margin-bottom: 16px;
+}
+
+.bulk-find-replace {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.bulk-find-replace .Polaris-Card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments for BulkOperations */
+@media (max-width: 600px) {
+  .bulk-operations {
+    padding: 8px 2px;
+    border-radius: 8px;
+  }
+  .bulk-operations .Polaris-Card {
+    max-width: 98vw;
+    margin: 8px auto;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    padding: 12px 6px;
+  }
+  .Polaris-Text--headingMd {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
+  .Polaris-TextContainer {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+  }
+}
+
+/* Skeleton loader for async content */
+.skeleton-loader {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 37%, #f0f0f0 63%);
+  border-radius: 8px;
+  min-height: 32px;
+  animation: skeleton-loading 1.2s infinite;
+}
+@keyframes skeleton-loading {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+/* Modal/drawer base styles */
+.bulk-modal, .bulk-drawer {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  padding: 24px;
+  max-width: 90vw;
+  margin: 0 auto;
+  z-index: 1000;
+}
+
+/* Accessibility improvements */
+.bulk-operations [aria-label],
+.bulk-operations [role] {
+  outline: none;
+}
+
+/* Dark mode support */
+/* Remove forced dark mode overrides. Use default backgrounds and text colors. */
+.bulk-operations {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}

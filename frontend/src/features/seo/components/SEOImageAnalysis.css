@@ -1,0 +1,164 @@
+/* Styles for SEOImageAnalysis component */
+.seo-image-analysis {
+  padding: 2rem;
+  border: 1px solid #f8d7da;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fff0f0 0%, #fce8e6 100%);
+  box-shadow: 0 4px 20px rgba(220, 53, 69, 0.1);
+}
+
+.seo-image-analysis h3 {
+  color: #b91c1c;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.seo-image-analysis form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.seo-image-analysis input {
+  padding: 0.75rem 1rem;
+  border: 2px solid #ced4da;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.seo-image-analysis input:focus {
+  outline: none;
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.seo-image-analysis button {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #dc3545 0%, #b91c1c 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.seo-image-analysis button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.seo-image-analysis button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.seo-image-error {
+  color: #dc3545;
+  background: #f8d7da;
+  border: 1px solid #f5c2c7;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.image-output {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+}
+
+.image-output strong {
+  color: #b91c1c;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.image-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.image-stat {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #e9ecef;
+}
+
+.image-stat strong {
+  display: block;
+  font-size: 2rem;
+  color: #dc3545;
+  margin-bottom: 0.25rem;
+}
+
+.image-stat span {
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.image-issues {
+  margin-top: 1.5rem;
+}
+
+.image-issues ul {
+  list-style: none;
+  padding: 0;
+}
+
+.image-issues li {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background: #f8d7da;
+  border-left: 4px solid #dc3545;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.image-issues li:last-child {
+  margin-bottom: 0;
+}
+
+.image-recommendations {
+  margin-top: 1.5rem;
+}
+
+.image-recommendations ul {
+  list-style: none;
+  padding: 0;
+}
+
+.image-recommendations li {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.image-recommendations li:last-child {
+  margin-bottom: 0;
+}

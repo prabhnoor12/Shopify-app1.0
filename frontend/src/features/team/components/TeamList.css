@@ -1,0 +1,26 @@
+.teamlist-spinner {
+  text-align: center;
+  margin: 24px 0;
+}
+
+.teamlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+.teamlist-table th,
+.teamlist-table td {
+  border: 1px solid #e3e3e3;
+  padding: 8px 12px;
+  text-align: left;
+}
+.teamlist-table th {
+  background: #f6f6f7;
+  font-weight: 600;
+}
+.teamlist-empty {
+  color: #666;
+  text-align: center;
+  margin: 24px 0;
+  font-size: 1.1em;
+}

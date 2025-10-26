@@ -1,0 +1,61 @@
+.erase-confirm-banner {
+  margin-top: 1rem;
+}
+
+.erase-cancel-btn {
+  margin-left: 1rem;
+}
+.privacy-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.privacy-dashboard .Polaris-Card {
+  margin-bottom: 1rem;
+}
+
+.consent-section {
+  margin-bottom: 2rem;
+}
+
+.consent-section h3 {
+  margin-bottom: 1rem;
+  color: #202223;
+}
+
+.consent-checkbox {
+  margin-bottom: 0.5rem;
+}
+
+.data-rights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .data-rights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.export-section,
+.rectification-section {
+  padding: 1rem;
+}
+
+.privacy-settings-section {
+  padding: 1rem;
+}
+
+.withdraw-consent-section {
+  margin-top: 1rem;
+}
+
+.resources-section {
+  margin-top: 1rem;
+}
+
+.resources-section p {
+  margin-bottom: 0.5rem;
+}
