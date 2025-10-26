@@ -24,3 +24,4 @@ argon2-cffi
 psycopg2
 pydantic[email]
 requests
+sendgrid
