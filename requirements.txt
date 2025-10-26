@@ -21,4 +21,5 @@ reportlab
 openai
 tenacity
 argon2-cffi
+psycopg2
 pydantic[email]
