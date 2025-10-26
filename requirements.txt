@@ -26,3 +26,5 @@ pydantic[email]
 requests
 sendgrid
 twilio
+bcrypt
+beautifulsoup4
