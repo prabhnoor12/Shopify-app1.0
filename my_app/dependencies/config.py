@@ -18,6 +18,12 @@ class Settings(BaseSettings):
     DB_MAX_OVERFLOW: int = int(os.getenv("DB_MAX_OVERFLOW", "10"))
     DB_POOL_TIMEOUT: int = int(os.getenv("DB_POOL_TIMEOUT", "30"))
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Modify DATABASE_URL for asyncpg if it's PostgreSQL
+        if self.DATABASE_URL.startswith("postgresql://"):
+            self.DATABASE_URL = self.DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+
     REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
