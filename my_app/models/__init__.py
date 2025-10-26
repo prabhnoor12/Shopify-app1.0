@@ -5,4 +5,4 @@ to prevent circular dependencies and SQLAlchemy metadata conflicts.
 Do not add model imports here.
 """
 
-from ..database import Base
+
