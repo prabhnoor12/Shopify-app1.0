@@ -43,8 +43,6 @@ def print_db_url_and_test():
     except Exception as e:
         print(f"[Startup] Database connection test failed: {e}")
 
-print_db_url_and_test()
-
 
 if not SQLALCHEMY_DATABASE_URL:
     raise RuntimeError(
@@ -83,6 +81,7 @@ try:
         pool_timeout=settings.DB_POOL_TIMEOUT,
         echo=settings.DB_ECHO,
     )
+    print_db_url_and_test()
 except Exception as exc:
     logging.error(
         "Failed to create database engine. Please check DATABASE_URL format and installed DB drivers."
