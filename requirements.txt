@@ -28,6 +28,6 @@ sendgrid
 twilio
 bcrypt
 beautifulsoup4
-
+jinja2
 dotenv
 slowapi
