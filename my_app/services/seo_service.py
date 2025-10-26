@@ -7,15 +7,13 @@ import trafilatura
 import spacy
 from collections import Counter
 
-# Load the spaCy model
+# Load the spaCy model, download if missing
+from spacy.cli import download as spacy_download
 try:
     nlp = spacy.load("en_core_web_sm")
 except OSError:
-    # This happens if the model is not downloaded, provide a helpful message
-    raise RuntimeError(
-        "spaCy model 'en_core_web_sm' not found. "
-        "Please run 'python -m spacy download en_core_web_sm' to download it."
-    )
+    spacy_download("en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
 
 # Constants for SEO analysis
 IDEAL_TITLE_LENGTH = (30, 60)

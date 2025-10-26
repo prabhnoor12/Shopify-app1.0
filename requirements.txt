@@ -32,4 +32,3 @@ jinja2
 dotenv
 slowapi
 spacy
-en-core-web-sm
