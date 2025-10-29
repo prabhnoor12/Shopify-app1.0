@@ -13,12 +13,12 @@ def add_cors_middleware(app):
     # Allow Shopify, local frontend, and ngrok/Cloudflare tunnel URLs
     allowed_origins = [
         "https://admin.shopify.com",
-        
+        "https://shopify-app1-0.pages.dev",
+        # You may keep localhost for local dev, but main frontend is now on Cloudflare Pages
         "https://127.0.0.1:5173",
         "http://127.0.0.1:5173",
         "https://localhost:5173",
         "http://localhost:5173",
-        # Add your public tunnel URL here, e.g. "https://xxxx.ngrok.io"
     ]
     app.add_middleware(
         CORSMiddleware,

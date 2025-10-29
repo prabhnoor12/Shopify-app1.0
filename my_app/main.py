@@ -95,7 +95,7 @@ from fastapi.responses import RedirectResponse
 # Root route now redirects to frontend
 @app.get("/")
 async def root():
-    return RedirectResponse(url="http://localhost:5173/")
+    return RedirectResponse(url="https://shopify-app1-0.pages.dev/")
 
 # Health check endpoint
 @app.get("/health")
