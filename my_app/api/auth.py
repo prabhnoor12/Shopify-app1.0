@@ -68,8 +68,10 @@ async def callback(request: Request, db: Session = Depends(get_db)) -> RedirectR
     if not valid_nonce:
         logger.error(f"Invalid OAuth state for shop: {shop_domain}")
         raise HTTPException(status_code=401, detail="Invalid OAuth state.")
-    if not verify_shopify_hmac(request):
-        logger.error(f"HMAC verification failed for shop: {shop_domain}")
+    try:
+        await verify_shopify_hmac(request)
+    except Exception as e:
+        logger.error(f"HMAC verification failed for shop: {shop_domain}: {e}")
         raise HTTPException(status_code=403, detail="HMAC verification failed.")
     token_url = f"https://{shop_domain}/admin/oauth/access_token"
     payload = {
@@ -95,7 +97,7 @@ async def callback(request: Request, db: Session = Depends(get_db)) -> RedirectR
             raise HTTPException(status_code=500, detail="Failed to create or update user.")
         logger.info(f"OAuth successful for shop: {shop_domain}")
         # Redirect to frontend after successful authentication
-        return RedirectResponse(url=f"https://shopify-app1-0.pages.dev/?shop={shop_domain}&access_token={access_token}")
-    except httpx.RequestError as e:
+        return RedirectResponse(url=f"https://shopify-app1-0.pages.dev/?shop={shop_domain}&accessToken={access_token}")
+         except httpx.RequestError as e:
         logger.error(f"OAuth token exchange failed for shop: {shop_domain}: {e}")
         raise HTTPException(status_code=500, detail=f"OAuth token exchange failed: {e}")
