@@ -10,15 +10,17 @@ const shopDomain = localStorage.getItem('shop');
 const accessToken = localStorage.getItem('accessToken');
 
 const SubscriptionPage: React.FC = () => {
-  if (!userId || !shopDomain || !accessToken) {
+  const shopDomain = localStorage.getItem('shop');
+  const accessToken = localStorage.getItem('access_token');
+  if (!shopDomain || !accessToken) {
     return <div className="error">Missing authentication info. Please log in.</div>;
   }
 
   return (
     <div className="subscription-page">
       <h1>Manage Your Subscription</h1>
-      <SubscriptionStatus userId={userId} shopDomain={shopDomain} accessToken={accessToken} />
-      <PlanSelector userId={userId} shopDomain={shopDomain} accessToken={accessToken} />
+      <SubscriptionStatus shopDomain={shopDomain} accessToken={accessToken} />
+      <PlanSelector shopDomain={shopDomain} accessToken={accessToken} />
     </div>
   );
 };

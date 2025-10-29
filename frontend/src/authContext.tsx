@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { userApi } from './api/userApi';
+import { fetchCurrentUser } from './api/userApi';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -47,7 +48,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     setLoading(true);
     userApi.getStatus()
-      .then(() => {
+      .then(async () => {
+        // Fetch userId after authentication
+        try {
+          const user = await fetchCurrentUser();
+          if (user && user.id) {
+            localStorage.setItem('userId', String(user.id));
+          }
+        } catch (e) {
+          // Optionally handle error
+        }
         setIsAuthenticated(true);
         setLoading(false);
       })
