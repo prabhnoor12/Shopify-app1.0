@@ -8,11 +8,8 @@ import SubscriptionStatus from '../components/SubscriptionStatus';
 
 const SubscriptionPage: React.FC = () => {
   const userId = Number(localStorage.getItem('userId'));
-  const shopDomain = localStorage.getItem('shop');
-  const accessToken = localStorage.getItem('accessToken');
-  if (!userId || !shopDomain || !accessToken) {
-    return <div className="error">Missing authentication info. Please log in.</div>;
-  }
+  const shopDomain = localStorage.getItem('shop') || '';
+  const accessToken = localStorage.getItem('accessToken') || '';
 
   return (
     <div className="subscription-page">
