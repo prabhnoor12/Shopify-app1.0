@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = '/api/product';
+const BASE_URL = '/api/product'; // This will be prefixed by BASE_API_URL in client.ts
 
 export const createProduct = async (data: Record<string, any>) => {
   const res = await axios.post(`${BASE_URL}/`, data);

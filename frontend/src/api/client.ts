@@ -1,6 +1,10 @@
 // src/api/client.ts
 
+
+const BASE_API_URL = 'https://shopify-app1-0.onrender.com';
+
 const request = async (url: string, method: string, data?: any) => {
+  const fullUrl = url.startsWith('http') ? url : `${BASE_API_URL}${url}`;
   const options: RequestInit = {
     method,
     headers: {
@@ -12,7 +16,7 @@ const request = async (url: string, method: string, data?: any) => {
     options.body = JSON.stringify(data);
   }
 
-  const response = await fetch(url, options);
+  const response = await fetch(fullUrl, options);
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({ detail: 'An unknown error occurred' }));

@@ -29,18 +29,20 @@ export async function fetchPlans(): Promise<Plan[]> {
 }
 
 // Fetch subscription status from backend
+
 export async function fetchSubscriptionStatus(userId: number): Promise<SubscriptionInfo> {
-  const res = await fetch(`/api/subscriptions/status/${userId}`);
+  const res = await fetch(`https://shopify-app1-0.onrender.com/api/subscriptions/status/${userId}`);
   if (!res.ok) throw new Error('Failed to fetch subscription status');
   return res.json();
 }
 
 // Create a new subscription (POST /subscriptions)
+
 export async function createSubscription(subscription: {
   user_id: number;
   plan_id: number;
 }, shopDomain: string, accessToken: string): Promise<{ confirmation_url: string }> {
-  const res = await fetch(`/api/subscriptions?shop_domain=${shopDomain}&access_token=${accessToken}`, {
+  const res = await fetch(`https://shopify-app1-0.onrender.com/api/subscriptions?shop_domain=${shopDomain}&access_token=${accessToken}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(subscription),
