@@ -28,14 +28,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const params = new URLSearchParams(location.search);
     const shop = params.get('shop');
     const host = params.get('host');
+    const accessToken = params.get('access_token');
     if (shop) {
       localStorage.setItem('shop', shop);
     }
     if (host) {
       localStorage.setItem('host', host);
     }
+    if (accessToken) {
+      localStorage.setItem('access_token', accessToken);
+    }
     const effectiveShop = shop || localStorage.getItem('shop');
-    if (!effectiveShop) {
+    const effectiveToken = accessToken || localStorage.getItem('access_token');
+    if (!effectiveShop || !effectiveToken) {
       setIsAuthenticated(false);
       setLoading(false);
       return;

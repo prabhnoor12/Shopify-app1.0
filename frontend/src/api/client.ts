@@ -5,13 +5,21 @@ const BASE_API_URL = 'https://shopify-app1-0.onrender.com';
 
 const request = async (url: string, method: string, data?: any) => {
   const fullUrl = url.startsWith('http') ? url : `${BASE_API_URL}${url}`;
+  const accessToken = localStorage.getItem('access_token');
+  const shopDomain = localStorage.getItem('shop');
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (accessToken) {
+    headers['X-Shop-Token'] = accessToken;
+  }
+  if (shopDomain) {
+    headers['X-Shop-Domain'] = shopDomain;
+  }
   const options: RequestInit = {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
   };
-
   if (data) {
     options.body = JSON.stringify(data);
   }
