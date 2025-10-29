@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const params = new URLSearchParams(location.search);
     const shop = params.get('shop');
     const host = params.get('host');
-    const accessToken = params.get('access_token');
+  const accessToken = params.get('accessToken') || params.get('access_token');
     if (shop) {
       localStorage.setItem('shop', shop);
     }
@@ -37,10 +37,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('host', host);
     }
     if (accessToken) {
-      localStorage.setItem('access_token', accessToken);
+      localStorage.setItem('accessToken', accessToken);
     }
-    const effectiveShop = shop || localStorage.getItem('shop');
-    const effectiveToken = accessToken || localStorage.getItem('access_token');
+  const effectiveShop = shop || localStorage.getItem('shop');
+  const effectiveToken = accessToken || localStorage.getItem('accessToken');
     if (!effectiveShop || !effectiveToken) {
       setIsAuthenticated(false);
       setLoading(false);
