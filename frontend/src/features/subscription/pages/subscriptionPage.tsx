@@ -23,13 +23,23 @@ const SubscriptionPage: React.FC = () => {
       if (urlShop) localStorage.setItem('shop', urlShop);
       if (urlAccessToken) localStorage.setItem('accessToken', urlAccessToken);
 
-      const storedUserId = localStorage.getItem('userId');
-      const storedShop = localStorage.getItem('shop');
-      const storedAccessToken = localStorage.getItem('accessToken');
+  const storedUserIdRaw = localStorage.getItem('userId');
+  const storedShopRaw = localStorage.getItem('shop');
+  const storedAccessTokenRaw = localStorage.getItem('accessToken');
 
-      // Type validation
-      if (typeof storedUserId !== 'string' || typeof storedShop !== 'string' || typeof storedAccessToken !== 'string') {
-        setError('User information type mismatch. Please log in again.');
+  // Default nulls to empty string for safe usage
+  const storedUserId = storedUserIdRaw ?? '';
+  const storedShop = storedShopRaw ?? '';
+  const storedAccessToken = storedAccessTokenRaw ?? '';
+
+
+      // Null/empty validation with detailed error
+      let missingFields: string[] = [];
+      if (!storedUserIdRaw) missingFields.push('User ID');
+      if (!storedShopRaw) missingFields.push('Shop Domain');
+      if (!storedAccessTokenRaw) missingFields.push('Access Token');
+      if (missingFields.length > 0) {
+        setError(`Missing user information: ${missingFields.join(', ')}. Please log in again.`);
         setLoading(false);
         return;
       }
@@ -41,13 +51,13 @@ const SubscriptionPage: React.FC = () => {
         return;
       }
 
-      if (!storedShop.trim()) {
+      if (storedShop.trim() === '') {
         setError('Invalid shop domain. Please log in again.');
         setLoading(false);
         return;
       }
 
-      if (!storedAccessToken.trim()) {
+      if (storedAccessToken.trim() === '') {
         setError('Invalid access token. Please log in again.');
         setLoading(false);
         return;
