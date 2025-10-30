@@ -17,7 +17,7 @@ import TeamRouter from './features/team/TeamRouter';
 import UsageRouter from './features/usage/UsageRouter';
 import ShopRouter from './features/shop/ShopRouter';
 import UserRouter from './features/user/UserRouter';
-// ...existing code...
+
 import './App.css';
 const AppLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

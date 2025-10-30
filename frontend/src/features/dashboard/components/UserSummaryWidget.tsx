@@ -62,7 +62,7 @@ const UserSummaryWidget: React.FC = () => {
             {summary.avatar_url ? (
               <img src={summary.avatar_url} alt={summary.name} className="user-summary-avatar" />
             ) : (
-              <span className="user-summary-avatar user-summary-avatar--placeholder" aria-label="User Initials">{summary.name[0]}</span>
+              <span className="user-summary-avatar user-summary-avatar--placeholder" aria-label="User Initials">{summary.name ? summary.name[0] : '?'}</span>
             )}
             {summary.status && (
               <span

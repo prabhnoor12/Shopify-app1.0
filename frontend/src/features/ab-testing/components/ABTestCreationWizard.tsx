@@ -208,7 +208,7 @@ const ABTestCreationWizard: React.FC<ABTestCreationWizardProps> = ({ forceStopLo
                 placeholder="e.g., Homepage Headline Test"
                 helpText="Give your test a descriptive name so you can easily identify it later."
               />
-              <ChoiceList
+                <ChoiceList
                 title="Test Type"
                 choices={[
                   { label: 'Product Page', value: 'product_page' },
@@ -216,7 +216,11 @@ const ABTestCreationWizard: React.FC<ABTestCreationWizardProps> = ({ forceStopLo
                   { label: 'Homepage (Coming Soon)', value: 'homepage', disabled: true },
                 ]}
                 selected={[testData.testType]}
-                onChange={(value) => handleInputChange('testType')(value[0])}
+                onChange={(value) => {
+                  // ChoiceList onChange typically provides string[]; be defensive in case of unexpected shapes
+                  const selected = Array.isArray(value) ? value[0] : (value as unknown as string);
+                  handleInputChange('testType')(selected ?? '');
+                }}
               />
             </FormLayout>
           </div>

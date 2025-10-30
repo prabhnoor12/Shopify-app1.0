@@ -31,7 +31,8 @@ const RecentDescriptionsList: React.FC = () => {
       setError(null);
       try {
         const res = await axios.get('/api/descriptions/recent');
-        setDescriptions(res.data);
+        // Ensure we always keep an array in state (API may occasionally return an object/null)
+        setDescriptions(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         setError('Failed to load recent descriptions.');
       } finally {

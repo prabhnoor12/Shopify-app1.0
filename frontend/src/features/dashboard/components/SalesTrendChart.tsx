@@ -19,7 +19,8 @@ const SalesTrendChart: React.FC = () => {
       setError(null);
       try {
         const res = await axios.get('/api/sales/trend');
-        setData(res.data);
+        // Ensure we always store an array; sometimes backend might return an object
+        setData(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         setError('Failed to load sales trend data.');
       } finally {

@@ -61,7 +61,9 @@ const CategoryPerformance: React.FC<CategoryPerformanceProps> = memo(({ categori
     queryFn: fetchCategoryPerformance,
     enabled: !propCategories,
   });
-  const displayCategories = propCategories || categories || [];
+  // Ensure we have an actual array before aggregation (react-query / API could return unexpected shapes)
+  const displayCategoriesRaw = propCategories || categories || [];
+  const displayCategories = Array.isArray(displayCategoriesRaw) ? displayCategoriesRaw : [];
   const chartCategories = aggregateCategories(displayCategories, 10);
 
   return (

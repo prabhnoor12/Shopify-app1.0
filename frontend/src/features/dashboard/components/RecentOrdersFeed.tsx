@@ -26,7 +26,8 @@ const RecentOrdersFeed: React.FC = () => {
       setError(null);
       try {
         const res = await axios.get('/api/orders/recent');
-        setOrders(res.data);
+        // Ensure we always store an array (guard against malformed API responses)
+        setOrders(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         setError('Failed to load recent orders.');
       } finally {
@@ -79,7 +80,7 @@ const RecentOrdersFeed: React.FC = () => {
                 <td>{o.order_id}</td>
                 <td>{new Date(o.created_at).toLocaleString()}</td>
                 <td>{o.customer}</td>
-                <td>${o.total_price.toFixed(2)}</td>
+                <td>${(o.total_price ?? 0).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>

@@ -23,7 +23,8 @@ const TopProductsWidget: React.FC = () => {
       setError(null);
       try {
         const res = await axios.get(`/api/products/top?by=${by}`);
-        setProducts(res.data);
+        // Normalize API response to an array to avoid reduce/map runtime errors
+        setProducts(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         setError('Failed to load top products.');
       } finally {
