@@ -25,7 +25,7 @@ import './App.css';
 
 // Component for protected routes that require authentication
 const ProtectedRoutes: React.FC = () => {
-  const { isAuthenticated, loading: authLoading } = useAuth();
+  const { isAuthenticated, loading: authLoading, error } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Show loading while checking auth
@@ -38,9 +38,14 @@ const ProtectedRoutes: React.FC = () => {
     );
   }
 
-  // Redirect to login if not authenticated
+  // Show error if authentication fails
   if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
+    return (
+      <div className="auth-error">
+        <h2>Authentication Failed</h2>
+        <p>{error || 'Unknown error occurred during authentication.'}</p>
+      </div>
+    );
   }
 
   // Render protected app with sidebar

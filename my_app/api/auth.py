@@ -90,8 +90,12 @@ async def callback(request: Request, db: Session = Depends(get_db)) -> RedirectR
         if not access_token:
             logger.error(f"Failed to get access token for shop: {shop_domain}")
             raise HTTPException(status_code=400, detail="Failed to get access token.")
-        # Use AuthService to handle OAuth callback and user creation/update
-        user = auth_service.handle_oauth_callback(shop_domain, access_token, refresh_token=refresh_token)
+    # Use AuthService to handle OAuth callback and user creation/update
+        user = await auth_service.handle_oauth_callback(
+            shop_domain,
+            access_token,
+            refresh_token=refresh_token
+        )
         if not user:
             logger.error(f"Failed to create or update user for shop: {shop_domain}")
             raise HTTPException(status_code=500, detail="Failed to create or update user.")

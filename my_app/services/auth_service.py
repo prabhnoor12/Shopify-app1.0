@@ -91,8 +91,10 @@ class AuthService:
     def __init__(self, db: Session):
         self.db = db
 
-    def handle_oauth_callback(
-        self, shop_domain: str, access_token: str, refresh_token: Optional[str] = None
+    async def handle_oauth_callback(
+        self, shop_domain: str,
+        access_token: str,
+        refresh_token: Optional[str] = None
     ) -> Optional[ShopifyUser]:
         """
         Create or update a Shopify user after OAuth callback. Logs and audits the event.
@@ -100,8 +102,11 @@ class AuthService:
         """
         try:
             normalized_domain = format_shop_domain(shop_domain)
-            user = create_or_update_user(
-                self.db, normalized_domain, access_token, refresh_token=refresh_token
+            user = await create_or_update_user(
+                self.db,
+                normalized_domain,
+                access_token,
+                refresh_token=refresh_token
             )
             self._track_last_login(normalized_domain)
             logger.info(f"OAuth callback handled for shop: {normalized_domain}")
