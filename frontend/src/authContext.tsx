@@ -106,6 +106,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
  
 
   useEffect(() => {
+    // Debug logging for parameter and localStorage state
+    console.log('[AuthContext] location.search:', location.search);
+    console.log('[AuthContext] localStorage.shop:', localStorage.getItem('shop'));
+    console.log('[AuthContext] localStorage.accessToken:', localStorage.getItem('accessToken'));
+    console.log('[AuthContext] localStorage.userId:', localStorage.getItem('userId'));
     // Bypass authentication in development if VITE_SHOPIFY_HOST is set
     if (import.meta.env.MODE === 'development' && import.meta.env.VITE_SHOPIFY_HOST) {
       setIsAuthenticated(true);
@@ -114,10 +119,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setShop(import.meta.env.VITE_SHOPIFY_HOST);
       return;
     }
-    const params = new URLSearchParams(location.search);
-    const shopParam = params.get('shop');
-    const hostParam = params.get('host');
-    const accessTokenParam = params.get('accessToken') || params.get('access_token');
+  const params = new URLSearchParams(location.search);
+  const shopParam = params.get('shop');
+  const hostParam = params.get('host');
+  const accessTokenParam = params.get('accessToken') || params.get('access_token');
+  console.log('[AuthContext] shopParam from URL:', shopParam);
+  console.log('[AuthContext] accessTokenParam from URL:', accessTokenParam);
 
     // Always set localStorage if present in query
     if (shopParam) {
