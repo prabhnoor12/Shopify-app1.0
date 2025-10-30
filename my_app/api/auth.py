@@ -28,10 +28,12 @@ async def install(shop: str, db: Session = Depends(get_db)) -> RedirectResponse:
     """
     Initiates Shopify OAuth installation flow using AuthService for nonce storage.
     """
-    parsed_url = urlparse(shop)
-    shop_domain = parsed_url.netloc or parsed_url.path
-    if not shop_domain.endswith(".myshopify.com"):
-        shop_domain += ".myshopify.com"
+    from ..utils.shopify import format_shop_domain, ShopifyDomainError
+    try:
+        shop_domain = format_shop_domain(shop)
+    except ShopifyDomainError as e:
+        logger.error(f"Invalid shop domain provided: {shop} - {e}")
+        raise HTTPException(status_code=400, detail=f"Invalid shop domain: {shop}")
     redirect_uri = f"{APP_URL}/auth/callback"
     logger.info(f"OAuth redirect_uri being used: {redirect_uri}")
     nonce = secrets.token_urlsafe(16)
@@ -54,11 +56,12 @@ async def callback(request: Request, db: Session = Depends(get_db)) -> RedirectR
     Handles Shopify OAuth callback, exchanges code for access token, saves user/shop info, and validates nonce using AuthService.
     """
     query_params = dict(request.query_params)
+    logger.info(f"OAuth callback received: {request.url}")
     shop_domain = query_params.get("shop")
     code = query_params.get("code")
     state = query_params.get("state")
     if not shop_domain or not code or not state:
-        logger.error("Missing shop, code, or state in callback.")
+        logger.error(f"Missing shop, code, or state in callback. Full callback URL: {request.url}")
         raise HTTPException(
             status_code=400, detail="Missing shop, code, or state parameter."
         )
