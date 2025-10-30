@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 SHOPIFY_API_KEY = os.getenv("SHOPIFY_API_KEY")
 SHOPIFY_API_SECRET = os.getenv("SHOPIFY_API_SECRET")
 SHOPIFY_SCOPES = os.getenv("SHOPIFY_SCOPES")
-APP_URL = os.getenv("APP_URL", "https://127.0.0.1:8000")
+APP_URL = os.getenv("APP_URL", "https://shopify-app1-0.pages.dev")
 
 
 @router.get("/install")
