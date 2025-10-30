@@ -163,10 +163,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else if (missingFromUrl) {
         details += ' Not found in URL.';
       }
-      details += '\nPlease re-authenticate via Shopify.';
+      details += '\nRedirecting to Shopify authentication...';
       setError(details);
-      // Optionally, redirect to install/auth flow:
-      // window.location.href = `/api/auth/install`;
+      // Automatic redirect to install/auth flow
+      setTimeout(() => {
+        window.location.href = '/api/auth/install';
+      }, 1500);
       return;
     }
     if (!effectiveToken) {
@@ -182,10 +184,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else if (missingFromUrl) {
         details += ' Not found in URL.';
       }
-      details += '\nPlease re-authenticate via Shopify.';
+      details += '\nRedirecting to Shopify authentication...';
       setError(details);
-      // Optionally, redirect to install/auth flow:
-      // window.location.href = `/api/auth/install`;
+      // Automatic redirect to install/auth flow
+      setTimeout(() => {
+        window.location.href = '/api/auth/install';
+      }, 1500);
       return;
     }
     
