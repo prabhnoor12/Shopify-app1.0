@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import fs from 'fs';
+// import fs from 'fs'; // Removed, not used
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
@@ -8,16 +8,12 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['react/compiler-runtime'],
   },
+  
+  // host and port removed for deployment
   server: {
-    https: {
-      key: fs.readFileSync('../localhost-key.pem'),
-      cert: fs.readFileSync('../localhost.pem'),
-    },
-    host: 'localhost',
-    port: 5173, // or your preferred port
     proxy: {
       '/api': {
-        target: 'https:127.0.0.1:8000', // Updated to public ngrok URL
+        target: 'https://shopify-app1-0.onrender.com', // Updated to deployed backend URL
         changeOrigin: true,
       },
     },

@@ -74,8 +74,6 @@ const ProtectedRoutes: React.FC = () => {
             <Route path="/usage/*" element={<UsageRouter />} />
             <Route path="/shop/*" element={<ShopRouter />} />
             <Route path="/user/*" element={<UserRouter />} />
-            {/* Redirect root to dashboard */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
             {/* Catch all for protected routes */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
