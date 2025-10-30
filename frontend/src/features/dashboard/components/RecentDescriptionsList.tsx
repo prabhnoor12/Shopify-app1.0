@@ -51,7 +51,7 @@ const RecentDescriptionsList: React.FC = () => {
   const chartData: Array<{ day: string; [action: string]: number | string }> = [];
   if (descriptions.length > 0) {
     const grouped: Record<string, Record<string, number>> = {};
-    descriptions.forEach(desc => {
+    (descriptions || []).forEach(desc => {
       const day = new Date(desc.timestamp).toLocaleDateString();
       if (!grouped[day]) grouped[day] = {};
       grouped[day][desc.action] = (grouped[day][desc.action] || 0) + 1;

@@ -52,7 +52,7 @@ export async function batchTranslateWithDeepL({ texts, targetLang, apiKey }: { t
 		auth_key: deeplApiKey,
 		target_lang: targetLang,
 	});
-	texts.forEach(text => params.append('text', text));
+	(texts || []).forEach(text => params.append('text', text));
 	try {
 		const response: AxiosResponse = await axios.post(url, params, {
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

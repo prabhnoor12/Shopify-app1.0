@@ -50,7 +50,7 @@ const ActivitySummaryWidget: React.FC = () => {
 
   // Advanced: Get unique activity types and counts
   const typeCounts: Record<string, number> = {};
-  activities.forEach(act => {
+  (activities || []).forEach(act => {
     typeCounts[act.type] = (typeCounts[act.type] || 0) + 1;
   });
   const typeOptions = [

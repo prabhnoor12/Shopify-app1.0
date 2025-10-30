@@ -33,7 +33,7 @@ export const triggerShopifyCallback = async (params: Record<string, string>) => 
     window?.env?.VITE_BACKEND_URL ||
     'https://127.0.0.1:8000';
   const url = new URL(`${backendUrl}/auth/callback`);
-  Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, value));
+  (Object.entries(params) || []).forEach(([key, value]) => url.searchParams.append(key, value));
   const response = await fetch(url.toString(), {
     method: 'GET',
     credentials: 'include',
