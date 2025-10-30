@@ -13,30 +13,41 @@ const SubscriptionPage: React.FC = () => {
 
   useEffect(() => {
     try {
+      // Always set values from URL if present
+      const params = new URLSearchParams(window.location.search);
+      const urlUserId = params.get('userId');
+      const urlShop = params.get('shop');
+      const urlAccessToken = params.get('accessToken');
+
+      if (urlUserId) localStorage.setItem('userId', urlUserId);
+      if (urlShop) localStorage.setItem('shop', urlShop);
+      if (urlAccessToken) localStorage.setItem('accessToken', urlAccessToken);
+
       const storedUserId = localStorage.getItem('userId');
       const storedShop = localStorage.getItem('shop');
       const storedAccessToken = localStorage.getItem('accessToken');
 
-      if (!storedUserId || !storedShop || !storedAccessToken) {
-        setError('Missing user information. Please log in again.');
+      // Type validation
+      if (typeof storedUserId !== 'string' || typeof storedShop !== 'string' || typeof storedAccessToken !== 'string') {
+        setError('User information type mismatch. Please log in again.');
         setLoading(false);
         return;
       }
 
-      const parsedUserId = Number(storedUserId);
+      const parsedUserId = parseInt(storedUserId, 10);
       if (isNaN(parsedUserId) || parsedUserId <= 0) {
-        setError('Invalid user ID. Please log in again.');
+        setError('Invalid user ID type or value. Please log in again.');
         setLoading(false);
         return;
       }
 
-      if (typeof storedShop !== 'string' || storedShop.trim() === '') {
+      if (!storedShop.trim()) {
         setError('Invalid shop domain. Please log in again.');
         setLoading(false);
         return;
       }
 
-      if (typeof storedAccessToken !== 'string' || storedAccessToken.trim() === '') {
+      if (!storedAccessToken.trim()) {
         setError('Invalid access token. Please log in again.');
         setLoading(false);
         return;
