@@ -103,11 +103,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Helper: check token expiration (dummy, replace with real logic if available)
-  const isTokenExpired = (token: string | null) => {
-    // TODO: Implement real expiration check if token is JWT
-    return false;
-  };
+ 
 
   useEffect(() => {
     // Bypass authentication in development if VITE_SHOPIFY_HOST is set
@@ -185,13 +181,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // window.location.href = `/api/auth/install`;
       return;
     }
-    if (isTokenExpired(effectiveToken)) {
-      logout();
-      setError('Access token expired. Please login again.');
-      // Optionally, redirect to install/auth flow:
-      // window.location.href = `/api/auth/install`;
-      return;
-    }
+    
 
     setLoading(true);
     // If userId is missing, fetch and store it
