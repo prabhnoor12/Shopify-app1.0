@@ -96,9 +96,9 @@ async def callback(request: Request, db: Session = Depends(get_db)) -> RedirectR
             logger.error(f"Failed to create or update user for shop: {shop_domain}")
             raise HTTPException(status_code=500, detail="Failed to create or update user.")
         logger.info(f"OAuth successful for shop: {shop_domain}")
-        # Redirect to frontend subscription page after successful authentication, now with userId
+        # Redirect to frontend root after successful authentication, now with userId
         return RedirectResponse(
-            url=f"https://shopify-app1-0.pages.dev/subscription?shop={shop_domain}&accessToken={access_token}&userId={user.id}"
+            url=f"https://shopify-app1-0.pages.dev/?shop={shop_domain}&accessToken={access_token}&userId={user.id}"
         )
     except httpx.RequestError as e:
         logger.error(f"OAuth token exchange failed for shop: {shop_domain}: {e}")

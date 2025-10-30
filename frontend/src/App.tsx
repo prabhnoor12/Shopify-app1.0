@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,  } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './reactQueryClient';
 import { AuthProvider, useAuth } from './authContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import Sidebar from './components/Sidebar';
-import { userApi } from './api/userApi';
+
 
 // Import all feature routers
 import DashboardRouter from './features/dashboard/DashboardRouter';
@@ -17,7 +17,7 @@ import TeamRouter from './features/team/TeamRouter';
 import UsageRouter from './features/usage/UsageRouter';
 import ShopRouter from './features/shop/ShopRouter';
 import UserRouter from './features/user/UserRouter';
-import SubscriptionRouter from './features/subscription/subscriptionRouter';
+// ...existing code...
 
 import './App.css';
 
@@ -28,46 +28,13 @@ interface UserStatus {
   monthly_generation_limit: number;
 }
 
-// Component for protected routes that require authentication and subscription
+// Component for protected routes that require authentication
 const ProtectedRoutes: React.FC = () => {
   const { isAuthenticated, loading: authLoading } = useAuth();
-  const [subscriptionLoading, setSubscriptionLoading] = useState(true);
-  const [hasValidSubscription, setHasValidSubscription] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  useEffect(() => {
-    const checkSubscription = async () => {
-      // Bypass subscription checks in development
-      if (import.meta.env.MODE === 'development') {
-        setHasValidSubscription(true);
-        setSubscriptionLoading(false);
-        return;
-      }
-
-      try {
-        const status: UserStatus = await userApi.getStatus();
-        // Consider subscription valid if plan is not 'free' or trial is active
-        const hasActivePlan = status.plan && status.plan !== 'free';
-        const hasActiveTrial = status.trial_ends_at && new Date(status.trial_ends_at) > new Date();
-        const isValid = hasActivePlan || hasActiveTrial;
-        setHasValidSubscription(!!isValid);
-      } catch (error) {
-        console.error('Failed to check subscription:', error);
-        setHasValidSubscription(false);
-      } finally {
-        setSubscriptionLoading(false);
-      }
-    };
-
-    if (isAuthenticated) {
-      checkSubscription();
-    } else {
-      setSubscriptionLoading(false);
-    }
-  }, [isAuthenticated]);
-
-  // Show loading while checking auth or subscription
-  if (authLoading || subscriptionLoading) {
+  // Show loading while checking auth
+  if (authLoading) {
     return (
       <div className="app-loading">
         <div className="app-loading-spinner"></div>
@@ -78,19 +45,13 @@ const ProtectedRoutes: React.FC = () => {
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/subscription" replace />;
-  }
-
-  // Redirect to subscription page if no valid subscription
-  if (!hasValidSubscription) {
-    return <Navigate to="/subscription" replace />;
+    return <Navigate to="/" replace />;
   }
 
   // Render protected app with sidebar
   return (
     <div className="app-layout">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-
       <div className="app-main">
         {/* Mobile menu button - only show when sidebar is closed */}
         {!sidebarOpen && (
@@ -102,7 +63,6 @@ const ProtectedRoutes: React.FC = () => {
             ☰
           </button>
         )}
-
         <div className="app-content">
           <Routes>
             <Route path="/dashboard/*" element={<DashboardRouter />} />
@@ -129,9 +89,6 @@ const ProtectedRoutes: React.FC = () => {
 const AppContent: React.FC = () => {
   return (
     <Routes>
-      {/* Public routes */}
-      <Route path="/subscription/*" element={<SubscriptionRouter />} />
-
       {/* Protected routes */}
       <Route path="/*" element={<ProtectedRoutes />} />
     </Routes>
