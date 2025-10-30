@@ -3,23 +3,111 @@ import { useLocation } from 'react-router-dom';
 import { userApi } from './api/userApi';
 import { fetchCurrentUser } from './api/userApi';
 
+
 interface AuthContextType {
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
+  userId?: string | null;
+  shop?: string | null;
+  accessToken?: string | null;
+  login: (shop: string, accessToken: string) => Promise<void>;
+  logout: () => void;
+  refreshUser: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>({ isAuthenticated: false, loading: true, error: null });
+
+const AuthContext = createContext<AuthContextType>({
+  isAuthenticated: false,
+  loading: true,
+  error: null,
+  userId: null,
+  shop: null,
+  accessToken: null,
+  login: async () => {},
+  logout: () => {},
+  refreshUser: async () => {},
+});
+
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [shop, setShop] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
   const location = useLocation();
+
+  // Helper: logout and clear all auth data
+  const logout = () => {
+    setIsAuthenticated(false);
+    setUserId(null);
+    setShop(null);
+    setAccessToken(null);
+    setError(null);
+    setLoading(false);
+    localStorage.removeItem('shop');
+    localStorage.removeItem('host');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userId');
+  };
+
+  // Helper: login and store auth data
+  const login = async (shopParam: string, accessTokenParam: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      localStorage.setItem('shop', shopParam);
+      localStorage.setItem('accessToken', accessTokenParam);
+      setShop(shopParam);
+      setAccessToken(accessTokenParam);
+      // Fetch userId
+      const user = await fetchCurrentUser();
+      if (user && user.id) {
+        localStorage.setItem('userId', String(user.id));
+        setUserId(String(user.id));
+        setIsAuthenticated(true);
+      } else {
+        throw new Error('User ID not found in backend response');
+      }
+    } catch (e: any) {
+      setIsAuthenticated(false);
+      setError('Login failed: ' + (e?.message || 'Unknown error'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Helper: refresh user info
+  const refreshUser = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const user = await fetchCurrentUser();
+      if (user && user.id) {
+        localStorage.setItem('userId', String(user.id));
+        setUserId(String(user.id));
+      } else {
+        throw new Error('User ID not found in backend response');
+      }
+    } catch (e: any) {
+      setError('Failed to refresh user: ' + (e?.message || 'Unknown error'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Helper: check token expiration (dummy, replace with real logic if available)
+  const isTokenExpired = (token: string | null) => {
+    // TODO: Implement real expiration check if token is JWT
+    return false;
+  };
 
   useEffect(() => {
     // Bypass authentication in development if VITE_SHOPIFY_HOST is set
@@ -27,39 +115,49 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsAuthenticated(true);
       setLoading(false);
       setError(null);
+      setShop(import.meta.env.VITE_SHOPIFY_HOST);
       return;
     }
     const params = new URLSearchParams(location.search);
-    const shop = params.get('shop');
-    const host = params.get('host');
-    const accessToken = params.get('accessToken') || params.get('access_token');
+    const shopParam = params.get('shop');
+    const hostParam = params.get('host');
+    const accessTokenParam = params.get('accessToken') || params.get('access_token');
 
     // Always set localStorage if present in query
-    if (shop) {
-      localStorage.setItem('shop', shop);
+    if (shopParam) {
+      localStorage.setItem('shop', shopParam);
+      setShop(shopParam);
+    } else {
+      setShop(localStorage.getItem('shop'));
     }
-    if (host) {
-      localStorage.setItem('host', host);
+    if (hostParam) {
+      localStorage.setItem('host', hostParam);
     }
-    if (accessToken) {
-      localStorage.setItem('accessToken', accessToken);
+    if (accessTokenParam) {
+      localStorage.setItem('accessToken', accessTokenParam);
+      setAccessToken(accessTokenParam);
+    } else {
+      setAccessToken(localStorage.getItem('accessToken'));
     }
 
     // Use values from localStorage if not present in query
-    const effectiveShop = shop || localStorage.getItem('shop');
-    const effectiveToken = accessToken || localStorage.getItem('accessToken');
+    const effectiveShop = shopParam || localStorage.getItem('shop');
+    const effectiveToken = accessTokenParam || localStorage.getItem('accessToken');
     let effectiveUserId = localStorage.getItem('userId');
 
     if (!effectiveShop) {
-      setIsAuthenticated(false);
-      setLoading(false);
+      logout();
       setError('Missing shop parameter');
       return;
     }
     if (!effectiveToken) {
-      setIsAuthenticated(false);
-      setLoading(false);
+      logout();
       setError('Missing accessToken parameter');
+      return;
+    }
+    if (isTokenExpired(effectiveToken)) {
+      logout();
+      setError('Access token expired. Please login again.');
       return;
     }
 
@@ -71,6 +169,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (user && user.id) {
           localStorage.setItem('userId', String(user.id));
           effectiveUserId = String(user.id);
+          setUserId(String(user.id));
         } else {
           setError('User ID not found in backend response');
         }
@@ -83,26 +182,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .then(async () => {
         if (!effectiveUserId) {
           await fetchAndStoreUserId();
+        } else {
+          setUserId(effectiveUserId);
         }
         // Only authenticate if all required values are present
         if (localStorage.getItem('shop') && localStorage.getItem('accessToken') && localStorage.getItem('userId')) {
           setIsAuthenticated(true);
           setError(null);
         } else {
-          setIsAuthenticated(false);
+          logout();
           setError('Missing one or more required parameters (shop, accessToken, userId)');
         }
         setLoading(false);
       })
       .catch((err: any) => {
-        setIsAuthenticated(false);
-        setLoading(false);
+        logout();
         setError('Failed to fetch user status: ' + (err?.message || 'Unknown error'));
       });
   }, [location]);
 
+  // Memoize context value for performance
+  const contextValue = React.useMemo(() => ({
+    isAuthenticated,
+    loading,
+    error,
+    userId,
+    shop,
+    accessToken,
+    login,
+    logout,
+    refreshUser,
+  }), [isAuthenticated, loading, error, userId, shop, accessToken]);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loading, error }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );
