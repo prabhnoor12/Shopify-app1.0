@@ -21,12 +21,7 @@ import UserRouter from './features/user/UserRouter';
 
 import './App.css';
 
-interface UserStatus {
-  plan: string;
-  trial_ends_at: string | null;
-  generations_used: number;
-  monthly_generation_limit: number;
-}
+
 
 // Component for protected routes that require authentication
 const ProtectedRoutes: React.FC = () => {
