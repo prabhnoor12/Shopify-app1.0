@@ -1,8 +1,6 @@
 import { Page, Layout, Tabs } from '@shopify/polaris';
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../../authContext';
-import { Navigate } from 'react-router-dom';
 import AIContentGeneration from '../components/AIContentGeneration';
 import BrandVoiceConfiguration from '../components/BrandVoiceConfiguration';
 import BulkFindReplace from '../components/BulkFindReplace';
@@ -27,7 +25,6 @@ export const ShopPage: React.FC<ShopPageProps> = ({ initialTab = 0 }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, loading } = useAuth();
   const [selectedTab, setSelectedTab] = useState(initialTab);
   const [forceStopLoading, setForceStopLoading] = useState(false);
   const timeoutRef = useRef<number | null>(null);
@@ -35,9 +32,6 @@ export const ShopPage: React.FC<ShopPageProps> = ({ initialTab = 0 }) => {
   const [generationResult, setGenerationResult] = useState<any>(null);
   const [selectedProduct, setSelectedProduct] = useState<string>('');
 
-  if (!loading && !isAuthenticated) {
-    return <Navigate to="/connect" replace />;
-  }
 
   // Sync tab with URL
   useEffect(() => {

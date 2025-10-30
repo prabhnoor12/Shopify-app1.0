@@ -1,7 +1,6 @@
 import {  Tabs } from '@shopify/polaris';
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
-import { useAuth } from '../../../authContext';
+import { useNavigate, useLocation, useParams, } from 'react-router-dom';
 import ABTestingDashboard from '../components/ABTestingDashboard';
 import ABTestCreationWizard from '../components/ABTestCreationWizard';
 import ABTestResults from '../components/ABTestResults';
@@ -27,26 +26,22 @@ const ABTestingPage: React.FC<ABTestingPageProps> = ({ initialTab = 0 }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
-  const { isAuthenticated, loading } = useAuth();
   const [selectedTab, setSelectedTab] = useState(initialTab);
   const [selectedTestId, setSelectedTestId] = useState<number | null>(null);
   const [forceStopLoading, setForceStopLoading] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
-  if (!loading && !isAuthenticated) {
-    return <Navigate to="/connect" replace />;
-  }
   // Force stop loading after 4 seconds
-  useEffect(() => {
-    setForceStopLoading(false);
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      setForceStopLoading(true);
-    }, 4000);
-    return () => {
+    useEffect(() => {
+      setForceStopLoading(false);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [selectedTab]);
+      timeoutRef.current = setTimeout(() => {
+        setForceStopLoading(true);
+      }, 4000);
+      return () => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      };
+    }, [selectedTab]);
 
   // Sync tab with URL
   useEffect(() => {
