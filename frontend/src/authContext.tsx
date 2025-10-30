@@ -106,11 +106,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
  
 
   useEffect(() => {
+    // On initial load, persist query parameters to localStorage
+    // On subsequent navigation, restore from localStorage if missing
+  const params = new URLSearchParams(location.search);
+  const shopParam = params.get('shop');
+  const hostParam = params.get('host');
+  const accessTokenParam = params.get('accessToken') || params.get('access_token');
+    // If query params exist, always update localStorage
+    if (shopParam && typeof shopParam === 'string' && shopParam.trim() !== '') {
+      localStorage.setItem('shop', shopParam);
+      setShop(shopParam);
+    } else {
+      // If missing from URL, restore from localStorage
+      const storedShop = localStorage.getItem('shop');
+      if (storedShop && typeof storedShop === 'string' && storedShop.trim() !== '') {
+        setShop(storedShop);
+      } else {
+        setShop(null);
+      }
+    }
+    if (accessTokenParam && typeof accessTokenParam === 'string' && accessTokenParam.trim() !== '') {
+      localStorage.setItem('accessToken', accessTokenParam);
+      setAccessToken(accessTokenParam);
+    } else {
+      const storedToken = localStorage.getItem('accessToken');
+      if (storedToken && typeof storedToken === 'string' && storedToken.trim() !== '') {
+        setAccessToken(storedToken);
+      } else {
+        setAccessToken(null);
+      }
+    }
     // Debug logging for parameter and localStorage state
     console.log('[AuthContext] location.search:', location.search);
     console.log('[AuthContext] localStorage.shop:', localStorage.getItem('shop'));
     console.log('[AuthContext] localStorage.accessToken:', localStorage.getItem('accessToken'));
     console.log('[AuthContext] localStorage.userId:', localStorage.getItem('userId'));
+    console.log('[AuthContext] shopParam from URL:', shopParam);
+    console.log('[AuthContext] accessTokenParam from URL:', accessTokenParam);
     // Bypass authentication in development if VITE_SHOPIFY_HOST is set
     if (import.meta.env.MODE === 'development' && import.meta.env.VITE_SHOPIFY_HOST) {
       setIsAuthenticated(true);
@@ -119,28 +151,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setShop(import.meta.env.VITE_SHOPIFY_HOST);
       return;
     }
-  const params = new URLSearchParams(location.search);
-  const shopParam = params.get('shop');
-  const hostParam = params.get('host');
-  const accessTokenParam = params.get('accessToken') || params.get('access_token');
-  console.log('[AuthContext] shopParam from URL:', shopParam);
-  console.log('[AuthContext] accessTokenParam from URL:', accessTokenParam);
 
-    // Always set localStorage if present in query
-    if (shopParam) {
+    // Robustly store values from query immediately if present
+    if (shopParam && typeof shopParam === 'string' && shopParam.trim() !== '') {
       localStorage.setItem('shop', shopParam);
       setShop(shopParam);
     } else {
-      setShop(localStorage.getItem('shop'));
+      const storedShop = localStorage.getItem('shop');
+      if (storedShop && typeof storedShop === 'string' && storedShop.trim() !== '') {
+        setShop(storedShop);
+      } else {
+        setShop(null);
+      }
     }
-    if (hostParam) {
+    if (hostParam && typeof hostParam === 'string' && hostParam.trim() !== '') {
       localStorage.setItem('host', hostParam);
     }
-    if (accessTokenParam) {
+    if (accessTokenParam && typeof accessTokenParam === 'string' && accessTokenParam.trim() !== '') {
       localStorage.setItem('accessToken', accessTokenParam);
       setAccessToken(accessTokenParam);
     } else {
-      setAccessToken(localStorage.getItem('accessToken'));
+      const storedToken = localStorage.getItem('accessToken');
+      if (storedToken && typeof storedToken === 'string' && storedToken.trim() !== '') {
+        setAccessToken(storedToken);
+      } else {
+        setAccessToken(null);
+      }
     }
 
     // Use values from localStorage if not present in query
