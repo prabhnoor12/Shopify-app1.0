@@ -13,27 +13,26 @@ const SubscriptionPage: React.FC = () => {
 
   useEffect(() => {
     try {
-      // Always set values from URL if present
+      // Read from URL first
       const params = new URLSearchParams(window.location.search);
       const urlUserId = params.get('userId');
       const urlShop = params.get('shop');
       const urlAccessToken = params.get('accessToken');
 
+      // Store in localStorage if present in URL
       if (urlUserId) localStorage.setItem('userId', urlUserId);
       if (urlShop) localStorage.setItem('shop', urlShop);
       if (urlAccessToken) localStorage.setItem('accessToken', urlAccessToken);
 
-  const storedUserIdRaw = localStorage.getItem('userId');
-  const storedShopRaw = localStorage.getItem('shop');
-  const storedAccessTokenRaw = localStorage.getItem('accessToken');
+      // Always read from localStorage after possible update
+      const storedUserIdRaw = localStorage.getItem('userId');
+      const storedShopRaw = localStorage.getItem('shop');
+      const storedAccessTokenRaw = localStorage.getItem('accessToken');
 
-  // Default nulls to empty string for safe usage
-  const storedUserId = storedUserIdRaw ?? '';
-  const storedShop = storedShopRaw ?? '';
-  const storedAccessToken = storedAccessTokenRaw ?? '';
+      // Debug info for troubleshooting
+      // console.log('SubscriptionPage values:', { urlUserId, urlShop, urlAccessToken, storedUserIdRaw, storedShopRaw, storedAccessTokenRaw });
 
-
-      // Null/empty validation with detailed error
+      // Validate presence
       let missingFields: string[] = [];
       if (!storedUserIdRaw) missingFields.push('User ID');
       if (!storedShopRaw) missingFields.push('Shop Domain');
@@ -44,28 +43,28 @@ const SubscriptionPage: React.FC = () => {
         return;
       }
 
-      const parsedUserId = parseInt(storedUserId, 10);
+      // Validate types and values
+      const parsedUserId = parseInt(storedUserIdRaw ?? '', 10);
       if (isNaN(parsedUserId) || parsedUserId <= 0) {
         setError('Invalid user ID type or value. Please log in again.');
         setLoading(false);
         return;
       }
-
-      if (storedShop.trim() === '') {
+      if ((storedShopRaw ?? '').trim() === '') {
         setError('Invalid shop domain. Please log in again.');
         setLoading(false);
         return;
       }
-
-      if (storedAccessToken.trim() === '') {
+      if ((storedAccessTokenRaw ?? '').trim() === '') {
         setError('Invalid access token. Please log in again.');
         setLoading(false);
         return;
       }
 
+      // Store in state
       setUserId(parsedUserId);
-      setShopDomain(storedShop);
-      setAccessToken(storedAccessToken);
+      setShopDomain(storedShopRaw ?? '');
+      setAccessToken(storedAccessTokenRaw ?? '');
       setLoading(false);
     } catch (e) {
       setError('Failed to load user information. Unexpected error.');
