@@ -145,19 +145,51 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const effectiveToken = accessTokenParam || localStorage.getItem('accessToken');
     let effectiveUserId = localStorage.getItem('userId');
 
+
+    // Robust fallback for missing shop/accessToken
     if (!effectiveShop) {
       logout();
-      setError('Missing shop parameter');
+      const missingFromLocalStorage = !localStorage.getItem('shop');
+      const missingFromUrl = !shopParam;
+      let details = 'Missing shop parameter.';
+      details += '\nSource:';
+      if (missingFromLocalStorage && missingFromUrl) {
+        details += ' Not found in localStorage or URL.';
+      } else if (missingFromLocalStorage) {
+        details += ' Not found in localStorage.';
+      } else if (missingFromUrl) {
+        details += ' Not found in URL.';
+      }
+      details += '\nPlease re-authenticate via Shopify.';
+      setError(details);
+      // Optionally, redirect to install/auth flow:
+      // window.location.href = `/api/auth/install`;
       return;
     }
     if (!effectiveToken) {
       logout();
-      setError('Missing accessToken parameter');
+      const missingFromLocalStorage = !localStorage.getItem('accessToken');
+      const missingFromUrl = !(accessTokenParam);
+      let details = 'Missing accessToken parameter.';
+      details += '\nSource:';
+      if (missingFromLocalStorage && missingFromUrl) {
+        details += ' Not found in localStorage or URL.';
+      } else if (missingFromLocalStorage) {
+        details += ' Not found in localStorage.';
+      } else if (missingFromUrl) {
+        details += ' Not found in URL.';
+      }
+      details += '\nPlease re-authenticate via Shopify.';
+      setError(details);
+      // Optionally, redirect to install/auth flow:
+      // window.location.href = `/api/auth/install`;
       return;
     }
     if (isTokenExpired(effectiveToken)) {
       logout();
       setError('Access token expired. Please login again.');
+      // Optionally, redirect to install/auth flow:
+      // window.location.href = `/api/auth/install`;
       return;
     }
 
