@@ -19,11 +19,13 @@ import ShopRouter from './features/shop/ShopRouter';
 import UserRouter from './features/user/UserRouter';
 
 import './App.css';
+import { CookieBanner, PrivacyPolicy } from './features/privacy/components';
 const AppLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="app-layout">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <CookieBanner />
       <div className="app-main">
         {/* Mobile menu button - only show when sidebar is closed */}
         {!sidebarOpen && (
@@ -46,6 +48,7 @@ const AppLayout: React.FC = () => {
             <Route path="/usage/*" element={<UsageRouter />} />
             <Route path="/shop/*" element={<ShopRouter />} />
             <Route path="/user/*" element={<UserRouter />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>

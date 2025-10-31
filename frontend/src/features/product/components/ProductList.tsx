@@ -45,10 +45,9 @@ const ProductList: React.FC = () => {
 
   // Pagination
   const totalPages = Math.ceil(filteredProducts.length / PAGE_SIZE);
-  const paginatedProducts = filteredProducts.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE
-  );
+  const paginatedProducts = Array.isArray(filteredProducts)
+    ? filteredProducts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+    : [];
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value);
@@ -74,11 +73,11 @@ const ProductList: React.FC = () => {
           className="product-list-filter"
         />
       </div>
-      {filteredProducts.length === 0 ? (
+      {!Array.isArray(filteredProducts) || filteredProducts.length === 0 ? (
         <div className="product-list-empty">No products found.</div>
       ) : (
         <ul className="product-list-grid">
-          {paginatedProducts.map(product => (
+          {Array.isArray(paginatedProducts) && paginatedProducts.map(product => (
             <li key={product.id} className="product-list-item">
               <div className="product-card">
                 {product.imageUrl ? (
@@ -98,16 +97,17 @@ const ProductList: React.FC = () => {
       )}
       {totalPages > 1 && (
         <div className="product-list-pagination">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-            <button
-              key={page}
-              className={`product-list-page-btn${page === currentPage ? ' active' : ''}`}
-              onClick={() => handlePageChange(page)}
-              disabled={page === currentPage}
-            >
-              {page}
-            </button>
-          ))}
+          {Array.isArray(Array.from({ length: totalPages }, (_, i) => i + 1)) &&
+            Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <button
+                key={page}
+                className={`product-list-page-btn${page === currentPage ? ' active' : ''}`}
+                onClick={() => handlePageChange(page)}
+                disabled={page === currentPage}
+              >
+                {page}
+              </button>
+            ))}
         </div>
       )}
     </div>

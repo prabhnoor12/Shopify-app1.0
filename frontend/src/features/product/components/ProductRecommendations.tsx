@@ -73,7 +73,7 @@ const ProductRecommendations: React.FC = () => {
           className="product-recommendations-category"
         >
           <option value="">All Categories</option>
-          {categories.map(cat => (
+          {Array.isArray(categories) && categories.map(cat => (
             <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>
@@ -97,7 +97,7 @@ const ProductRecommendations: React.FC = () => {
           />
         </label>
       </div>
-      {filteredRecommendations.length === 0 ? (
+      {!Array.isArray(filteredRecommendations) || filteredRecommendations.length === 0 ? (
         <div className="product-recommendations-empty">No recommendations found.</div>
       ) : (
         <ul className="product-recommendations-list">

@@ -93,7 +93,7 @@ const ProductAltTextGenerator: React.FC = () => {
           onChange={handleProductChange}
         >
           <option value="">-- Choose a product --</option>
-          {products.map(product => (
+          {Array.isArray(products) && products.map(product => (
             <option key={product.id} value={product.id}>
               {product.name}
             </option>
