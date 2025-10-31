@@ -281,9 +281,9 @@ const TagListWithInput: React.FC<{
 	return (
 		<div className={styles.tagListContainer}>
 			<div className={styles.stack}>
-				{tags.map((tag, idx) => (
-					<Tag key={tag + idx} onRemove={disabled ? undefined : () => onRemove(idx)}>{tag}</Tag>
-				))}
+						{Array.isArray(tags) && tags.map((tag, idx) => (
+							<Tag key={tag + idx} onRemove={disabled ? undefined : () => onRemove(idx)}>{tag}</Tag>
+						))}
 			</div>
 			<TextField
 				label="Add"

@@ -192,7 +192,7 @@ const BulkOperations: React.FC<BulkOperationsProps> = ({ setError }) => {
 
           {step === 'imported' && (
             <>
-              <Banner tone="success">Imported {products.length} products.</Banner>
+              <Banner tone="success">Imported {Array.isArray(products) ? products.length : 0} products.</Banner>
               <div className="button-group">
                 <Button onClick={selectAll} size="slim">Select All</Button>
                 <Button onClick={deselectAll} size="slim">Deselect All</Button>
@@ -214,7 +214,7 @@ const BulkOperations: React.FC<BulkOperationsProps> = ({ setError }) => {
               </div>
               <div className="bulk-operations-list">
                 <List type="bullet">
-                  {products.map((p) => (
+                  {Array.isArray(products) && products.map((p) => (
                     <List.Item key={p.id}>
                       <Checkbox
                         label={p.title}
@@ -241,7 +241,7 @@ const BulkOperations: React.FC<BulkOperationsProps> = ({ setError }) => {
               <Banner tone="success">Descriptions generated for all selected products.</Banner>
               <div className="bulk-operations-list">
                 <List type="bullet">
-                  {products.filter((p) => selected.has(p.id)).map((p) => (
+                  {Array.isArray(products) && products.filter((p) => selected.has(p.id)).map((p) => (
                     <List.Item key={p.id}>{p.title}: {p.description}</List.Item>
                   ))}
                 </List>
@@ -260,7 +260,7 @@ const BulkOperations: React.FC<BulkOperationsProps> = ({ setError }) => {
           {step === 'exported' && (
             <>
               <Banner tone="success">Exported {exportedCount} products to Shopify!</Banner>
-              {exportErrors.length > 0 && (
+              {Array.isArray(exportErrors) && exportErrors.length > 0 && (
                 <Banner tone="critical" title="Some products failed to export:">
                   <List type="bullet">
                     {exportErrors.map((err) => (

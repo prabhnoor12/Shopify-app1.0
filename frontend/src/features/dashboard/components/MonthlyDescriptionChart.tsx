@@ -43,14 +43,14 @@ const MonthlyDescriptionChart: React.FC = () => {
       {error && <div className="dashboard-error">{error}</div>}
       {loading ? (
         <div className="dashboard-loader" />
-      ) : data.length === 0 ? (
+      ) : Array.isArray(data) && data.length === 0 ? (
         <div className="empty-state">
           <p>No data available for this month.</p>
         </div>
       ) : (
         <ResponsiveContainer width="100%" height={300}>
           <LineChart
-            data={data}
+            data={Array.isArray(data) ? data : []}
             margin={{ top: 16, right: 24, left: 0, bottom: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />

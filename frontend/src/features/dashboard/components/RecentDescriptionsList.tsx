@@ -43,16 +43,18 @@ const RecentDescriptionsList: React.FC = () => {
   }, []);
   // Summary: count by action
   const total = descriptions.length;
-  const actionCounts = descriptions.reduce((acc, d) => {
-    acc[d.action] = (acc[d.action] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const actionCounts = Array.isArray(descriptions)
+    ? descriptions.reduce((acc, d) => {
+        acc[d.action] = (acc[d.action] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>)
+    : {};
 
   // Prepare data for chart: group by day and action
   const chartData: Array<{ day: string; [action: string]: number | string }> = [];
   if (descriptions.length > 0) {
     const grouped: Record<string, Record<string, number>> = {};
-    (descriptions || []).forEach(desc => {
+    (Array.isArray(descriptions) ? descriptions : []).forEach(desc => {
       const day = new Date(desc.timestamp).toLocaleDateString();
       if (!grouped[day]) grouped[day] = {};
       grouped[day][desc.action] = (grouped[day][desc.action] || 0) + 1;
@@ -67,13 +69,13 @@ const RecentDescriptionsList: React.FC = () => {
       {error && <div className="dashboard-error">{error}</div>}
       <div className="recent-descriptions-summary">
         <span><strong>Total:</strong> {total}</span>
-        {Object.entries(actionCounts).map(([action, count]) => (
+        {Array.isArray(Object.entries(actionCounts)) && Object.entries(actionCounts).map(([action, count]) => (
           <span key={action}><strong>{action}:</strong> {count}</span>
         ))}
       </div>
       {loading ? (
         <div className="dashboard-loader" />
-      ) : descriptions.length === 0 ? (
+      ) : Array.isArray(descriptions) && descriptions.length === 0 ? (
         <div className="empty-state">
           <p>No recent descriptions found.</p>
         </div>
@@ -87,7 +89,7 @@ const RecentDescriptionsList: React.FC = () => {
                 <YAxis allowDecimals={false} tick={{ fill: '#888' }} />
                 <Tooltip contentStyle={{ background: '#fff', borderRadius: 8, border: '1px solid #eee' }} />
                 <Legend verticalAlign="top" height={32} iconType="circle" />
-                {Object.keys(actionCounts).map((action, idx) => (
+                {Array.isArray(Object.keys(actionCounts)) && Object.keys(actionCounts).map((action, idx) => (
                   <Bar key={action} dataKey={action} name={action} fill={idx === 0 ? '#8884d8' : '#82ca9d'} radius={[4, 4, 0, 0]} />
                 ))}
               </BarChart>
@@ -103,7 +105,7 @@ const RecentDescriptionsList: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {descriptions.map((desc, idx) => (
+              {Array.isArray(descriptions) && descriptions.map((desc, idx) => (
                 <tr key={idx} className={`recent-description-item${idx === 0 ? ' recent-description-item--highlight' : ''}`}>
                   <td>{idx + 1}</td>
                   <td className="recent-description-td-flex">

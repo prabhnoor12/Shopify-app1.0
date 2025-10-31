@@ -77,7 +77,7 @@ const TopProductsWidget: React.FC = () => {
       {error && <div className="dashboard-error">{error}</div>}
       {loading ? (
         <div className="dashboard-loader" />
-      ) : products.length === 0 ? (
+      ) : Array.isArray(products) && products.length === 0 ? (
         <div className="empty-state">
           <p>No top products found.</p>
         </div>
@@ -93,7 +93,7 @@ const TopProductsWidget: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((p, idx) => (
+            {Array.isArray(products) && products.map((p, idx) => (
               <tr key={p.product_id} className={`top-product-item${idx === 0 ? ' top-product-item--highlight' : ''}`}>
                 <td>{idx + 1}</td>
                 <td className="top-product-td-flex">

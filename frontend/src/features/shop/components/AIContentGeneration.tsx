@@ -126,18 +126,22 @@ const AIContentGeneration: React.FC<AIContentGenerationProps> = ({ forceStopLoad
 				setGenerationResult(resultData);
 				// Translate generated content if language is not English
 				if (inputs.language !== 'EN' && resultData?.descriptions?.length) {
-					setTranslating(true);
-					try {
-						const translatedDescriptions = await Promise.all(
-							resultData.descriptions.map((desc: string) =>
-								translateWithDeepL({ text: desc, targetLang: inputs.language as import('./LanguageTranslation').SupportedLanguage, apiKey: '' })
-							)
-						);
-						setTranslatedResult({
-							...resultData,
-							descriptions: translatedDescriptions.map((t: import('./LanguageTranslation').TranslationResult) => t.translated),
-						});
-					} catch (err: any) {
+								setTranslating(true);
+								try {
+									const translatedDescriptions = await Promise.all(
+										Array.isArray(resultData.descriptions)
+											? resultData.descriptions.map((desc: string) =>
+													translateWithDeepL({ text: desc, targetLang: inputs.language as import('./LanguageTranslation').SupportedLanguage, apiKey: '' })
+												)
+											: []
+									);
+									setTranslatedResult({
+										...resultData,
+										descriptions: Array.isArray(translatedDescriptions)
+											? translatedDescriptions.map((t: import('./LanguageTranslation').TranslationResult) => t.translated)
+											: [],
+									});
+								} catch (err: any) {
 						if (setError) setError('Translation failed: ' + (err?.message || 'Unknown error'));
 						setTranslatedResult(null);
 					} finally {

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useMemo } from 'react';
 
 interface ABTestingDashboardProps {
@@ -138,79 +137,79 @@ const ABTestingDashboard: React.FC<ABTestingDashboardProps> = ({ onTestSelect, o
 
 				{!loading && !error && (
 					<>
-							<section className="ab-summary" aria-label="Active A/B Tests">
-								<h2>Active Tests</h2>
-								{activeTests.length === 0 ? (
-									<div className="ab-empty">No active tests found.</div>
-								) : (
-									<ul>
-										{activeTests.map(test => (
-											<li key={test.id}>
-												<strong>{test.name}</strong> (Started: {test.startDate})
-												<button onClick={() => onTestSelect(Number(test.id))} className="ab-select-btn" aria-label={`Select test ${test.name}`}>Select</button>
-											</li>
-										))}
-									</ul>
-								)}
-							</section>
+						<section className="ab-summary" aria-label="Active A/B Tests">
+							<h2>Active Tests</h2>
+							{Array.isArray(activeTests) && activeTests.length === 0 ? (
+								<div className="ab-empty">No active tests found.</div>
+							) : (
+								<ul>
+									{Array.isArray(activeTests) && activeTests.map(test => (
+										<li key={test.id}>
+											<strong>{test.name}</strong> (Started: {test.startDate})
+											<button onClick={() => onTestSelect(Number(test.id))} className="ab-select-btn" aria-label={`Select test ${test.name}`}>Select</button>
+										</li>
+									))}
+								</ul>
+							)}
+						</section>
 
-							<section className="ab-table" aria-label="Recent A/B Tests">
-								<h2>Recent Tests</h2>
-								{tests.length === 0 ? (
-									<div className="ab-empty">No A/B tests found. Start your first test to see results here!</div>
-								) : (
-											<div className="ab-table-scroll">
-												<table>
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Status</th>
-													<th>Start Date</th>
-													<th>End Date</th>
-													<th>Variants</th>
-													<th>Action</th>
+						<section className="ab-table" aria-label="Recent A/B Tests">
+							<h2>Recent Tests</h2>
+							{Array.isArray(tests) && tests.length === 0 ? (
+								<div className="ab-empty">No A/B tests found. Start your first test to see results here!</div>
+							) : (
+								<div className="ab-table-scroll">
+									<table>
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Status</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>Variants</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											{Array.isArray(tests) && tests.map(test => (
+												<tr key={test.id}>
+													<td>{test.name}</td>
+													<td>{test.status}</td>
+													<td>{test.startDate}</td>
+													<td>{test.endDate || '-'}</td>
+													<td>
+														{Array.isArray(test.variants) && test.variants.length > 0 ? (
+															test.variants.map(variant => (
+																<div key={variant.id}>
+																	<strong>{variant.name}</strong>: {variant.conversionRate * 100}% ({variant.users} users)
+																</div>
+															))
+														) : (
+															<span>No variants</span>
+														)}
+													</td>
+													<td>
+														<button onClick={() => onTestSelect(Number(test.id))} className="ab-select-btn" aria-label={`Select test ${test.name}`}>Select</button>
+													</td>
 												</tr>
-											</thead>
-											<tbody>
-												{tests.map(test => (
-													<tr key={test.id}>
-														<td>{test.name}</td>
-														<td>{test.status}</td>
-														<td>{test.startDate}</td>
-														<td>{test.endDate || '-'}</td>
-														<td>
-															{test.variants && test.variants.length > 0 ? (
-																test.variants.map(variant => (
-																	<div key={variant.id}>
-																		<strong>{variant.name}</strong>: {variant.conversionRate * 100}% ({variant.users} users)
-																	</div>
-																))
-															) : (
-																<span>No variants</span>
-															)}
-														</td>
-														<td>
-															<button onClick={() => onTestSelect(Number(test.id))} className="ab-select-btn" aria-label={`Select test ${test.name}`}>Select</button>
-														</td>
-													</tr>
-												))}
-											</tbody>
-										</table>
-										{hasMore && (
-											<div className="ab-loadmore-container">
-												<button
-													className="ab-loadmore-btn"
-													onClick={fetchMore}
-													disabled={isFetchingMore}
-													aria-label="Load more A/B tests"
-												>
-													{isFetchingMore ? 'Loading more...' : 'Load More'}
-												</button>
-											</div>
-										)}
-									</div>
-								)}
-							</section>
+											))}
+										</tbody>
+									</table>
+									{hasMore && (
+										<div className="ab-loadmore-container">
+											<button
+												className="ab-loadmore-btn"
+												onClick={fetchMore}
+												disabled={isFetchingMore}
+												aria-label="Load more A/B tests"
+											>
+												{isFetchingMore ? 'Loading more...' : 'Load More'}
+											</button>
+										</div>
+									)}
+								</div>
+							)}
+						</section>
 					</>
 				)}
 			</div>

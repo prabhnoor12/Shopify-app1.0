@@ -153,19 +153,19 @@ const BulkFindReplace: React.FC<BulkFindReplaceProps> = ({ forceStopLoading }) =
           {status === 'success' && result && (
             <div className="bulk-find-replace-result">
               <Banner tone="success" title="Bulk Replace Completed" onDismiss={() => dispatch({ type: 'RESET' })}>
-                <p>Found {result.total_matches} matches and updated {result.updated_products.length} products.</p>
+                  <p>Found {typeof result.total_matches === 'number' ? result.total_matches : 0} matches and updated {Array.isArray(result.updated_products) ? result.updated_products.length : 0} products.</p>
               </Banner>
-              {result.errors.length > 0 && (
-                <Banner tone="critical" title="Errors">
-                  <List type="bullet">
-                    {result.errors.map((err, i) => (
-                      <List.Item key={i}>
-                        Product {err.product_id}: {err.error}
-                      </List.Item>
-                    ))}
-                  </List>
-                </Banner>
-              )}
+                {Array.isArray(result.errors) && result.errors.length > 0 && (
+                  <Banner tone="critical" title="Errors">
+                    <List type="bullet">
+                      {result.errors.map((err, i) => (
+                        <List.Item key={i}>
+                          Product {err.product_id}: {err.error}
+                        </List.Item>
+                      ))}
+                    </List>
+                  </Banner>
+                )}
             </div>
           )}
         </LegacyStack>

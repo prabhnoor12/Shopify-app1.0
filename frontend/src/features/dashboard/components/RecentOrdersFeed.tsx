@@ -45,11 +45,11 @@ const RecentOrdersFeed: React.FC = () => {
       {error && <div className="dashboard-error">{error}</div>}
       <div className="recent-orders-summary">
         <span><strong>Total Revenue:</strong> ${totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-        <span><strong>Orders:</strong> {orders.length}</span>
+        <span><strong>Orders:</strong> {Array.isArray(orders) ? orders.length : 0}</span>
       </div>
       {loading ? (
         <div className="dashboard-loader" />
-      ) : orders.length === 0 ? (
+      ) : Array.isArray(orders) && orders.length === 0 ? (
         <div className="empty-state">
           <p>No recent orders found.</p>
         </div>
@@ -66,7 +66,7 @@ const RecentOrdersFeed: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((o, idx) => (
+            {Array.isArray(orders) && orders.map((o, idx) => (
               <tr key={o.order_id} className={`recent-order-item${idx === 0 ? ' recent-order-item--highlight' : ''}`}>
                 <td>{idx + 1}</td>
                 <td className="recent-order-td-flex">

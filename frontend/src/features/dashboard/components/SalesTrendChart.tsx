@@ -31,19 +31,19 @@ const SalesTrendChart: React.FC = () => {
   }, []);
 
   const totalSales = data.reduce((sum, d) => sum + (d.total_sales || 0), 0);
-  const maxSales = Math.max(...data.map(d => d.total_sales), 0);
+  const maxSales = Math.max(...(Array.isArray(data) ? data.map(d => d.total_sales) : []), 0);
 
   return (
     <div className="sales-trend-chart">
-      <h2 className="sales-trend-title">Sales Trend (Last {data.length} Days)</h2>
+  <h2 className="sales-trend-title">Sales Trend (Last {Array.isArray(data) ? data.length : 0} Days)</h2>
       {error && <div className="dashboard-error">{error}</div>}
       <div className="sales-trend-summary">
         <span><strong>Total Sales:</strong> ${totalSales.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-        <span><strong>Days:</strong> {data.length}</span>
+  <span><strong>Days:</strong> {Array.isArray(data) ? data.length : 0}</span>
       </div>
       {loading ? (
         <div className="dashboard-loader" />
-      ) : data.length === 0 ? (
+      ) : Array.isArray(data) && data.length === 0 ? (
         <div className="empty-state">
           <p>No sales data available.</p>
         </div>
@@ -57,7 +57,7 @@ const SalesTrendChart: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((point, idx) => (
+            {Array.isArray(data) && data.map((point, idx) => (
               <tr key={point.date} className={`sales-trend-item${point.total_sales === maxSales ? ' sales-trend-item--highlight' : ''}`}>
                 <td>{idx + 1}</td>
                 <td>{point.date}</td>

@@ -54,8 +54,8 @@ const ActivitySummaryWidget: React.FC = () => {
     typeCounts[act.type] = (typeCounts[act.type] || 0) + 1;
   });
   const typeOptions = [
-    { label: 'All types', value: '' },
-    ...Object.keys(typeCounts).map(type => ({ label: `${type} (${typeCounts[type]})`, value: type }))
+  { label: 'All types', value: '' },
+  ...Array.isArray(Object.keys(typeCounts)) ? Object.keys(typeCounts).map(type => ({ label: `${type} (${typeCounts[type]})`, value: type })) : []
   ];
 
   // Advanced: Filter activities by type
@@ -65,7 +65,7 @@ const ActivitySummaryWidget: React.FC = () => {
   const handleExportCSV = () => {
     const rows = [
       ['Type', 'Description', 'Timestamp'],
-      ...filteredActivities.map(a => [a.type, a.description, a.timestamp])
+      ...(Array.isArray(filteredActivities) ? filteredActivities.map(a => [a.type, a.description, a.timestamp]) : [])
     ];
     const csv = rows.map(r => r.map(x => `"${x.replace(/"/g, '""')}` ).join(',')).join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -91,7 +91,7 @@ const ActivitySummaryWidget: React.FC = () => {
         </div>
         {Object.keys(typeCounts).length > 0 && (
           <div className="activity-summary-type-counts">
-            <Text as="span" variant="bodySm">Type counts: {Object.entries(typeCounts).map(([type, count]) => `${type}: ${count}`).join(', ')}</Text>
+            <Text as="span" variant="bodySm">Type counts: {Array.isArray(Object.entries(typeCounts)) ? Object.entries(typeCounts).map(([type, count]) => `${type}: ${count}`).join(', ') : ''}</Text>
           </div>
         )}
         <div className="activity-summary-filter">
@@ -121,11 +121,11 @@ const ActivitySummaryWidget: React.FC = () => {
               <div className="activity-summary-heading">
                 <Text as="h3" variant="headingSm">Recent Activity</Text>
               </div>
-              {filteredActivities.length === 0 ? (
+              {Array.isArray(filteredActivities) && filteredActivities.length === 0 ? (
                 <Text as="span">No activity found for this period.</Text>
               ) : (
                 <ul className="activity-summary-list">
-                  {filteredActivities.map(act => (
+                  {Array.isArray(filteredActivities) && filteredActivities.map(act => (
                     <li key={act.id} className="activity-summary-item">
                       <Text as="span" variant="bodySm">
                         <strong>{act.type}</strong>: {act.description} <em>({new Date(act.timestamp).toLocaleString()})</em>

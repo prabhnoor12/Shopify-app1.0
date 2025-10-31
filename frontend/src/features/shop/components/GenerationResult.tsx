@@ -98,10 +98,10 @@ const GenerationResult = ({ result, selectedProduct, setError }: GenerationResul
       <div className="ai-content-results">
         <LegacyStack vertical>
           <Text variant="headingMd" as="h3">Generated Content Variants</Text>
-          {result.descriptions.map((desc, i) => {
+          {Array.isArray(result.descriptions) && result.descriptions.map((desc, i) => {
             // Basic SEO analysis (very simple)
             const basicClarity = desc.length > 120 ? 'Good' : 'Needs more detail';
-            const basicKeywordDensity = result.keywords.length > 0 ? result.keywords.map(k => ({ keyword: k, density: `${((desc.match(new RegExp(k, 'gi')) || []).length / desc.split(' ').length * 100).toFixed(1)}%` })) : [];
+            const basicKeywordDensity = Array.isArray(result.keywords) && result.keywords.length > 0 ? result.keywords.map(k => ({ keyword: k, density: `${((desc.match(new RegExp(k, 'gi')) || []).length / desc.split(' ').length * 100).toFixed(1)}%` })) : [];
             return (
               <Card key={i}>
                   <div className="ai-description-center">
@@ -109,7 +109,7 @@ const GenerationResult = ({ result, selectedProduct, setError }: GenerationResul
                   </div>
                   <div className="ai-basic-seo">
                     <Text as="span" tone="subdued">Clarity: {basicClarity}</Text>
-                    {basicKeywordDensity.length > 0 && (
+                    {Array.isArray(basicKeywordDensity) && basicKeywordDensity.length > 0 && (
                         <span className="ai-keyword-density">
                         <Text as="span" tone="subdued">
                           Keyword Density: {basicKeywordDensity.map(kd => `${kd.keyword}: ${kd.density}`).join(', ')}

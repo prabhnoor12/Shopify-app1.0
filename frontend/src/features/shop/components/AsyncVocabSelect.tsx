@@ -40,7 +40,7 @@ const AsyncVocabSelect: React.FC<AsyncVocabSelectProps> = ({ label, value, onCha
         placeholder="Type at least 2 characters..."
       />
       {loading && <Spinner size="small" />}
-      {!loading && options.length > 0 && (
+      {!loading && Array.isArray(options) && options.length > 0 && (
         <Listbox
           accessibilityLabel={`${label} results`}
           onSelect={(selected) => onSelect(selected)}

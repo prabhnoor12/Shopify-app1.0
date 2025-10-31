@@ -53,7 +53,7 @@ const ProductAsyncSelect: React.FC<ProductAsyncSelectProps> = ({ onSelect, selec
 
   // Keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!options.length) return;
+  if (!Array.isArray(options) || !options.length) return;
     if (e.key === 'ArrowDown') {
       setHighlighted((prev) => (prev + 1) % options.length);
       e.preventDefault();
@@ -76,7 +76,7 @@ const ProductAsyncSelect: React.FC<ProductAsyncSelectProps> = ({ onSelect, selec
         placeholder="Type at least 2 characters..."
       />
       {loading && <Spinner size="small" />}
-      {!loading && options.length > 0 && (
+      {!loading && Array.isArray(options) && options.length > 0 && (
         <div tabIndex={0} onKeyDown={handleKeyDown}>
           <Listbox
             accessibilityLabel="Product results"

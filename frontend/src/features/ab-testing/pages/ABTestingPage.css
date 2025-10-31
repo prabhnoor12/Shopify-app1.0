@@ -2,7 +2,7 @@
   max-width: 1100px;
   margin: 0 auto;
   padding: 32px 16px;
-  background: linear-gradient(135deg, #f7f8fa 0%, #e3e6f3 100%);
+  background: linear-gradient(120deg, #f7f8fa 0%, #e3e6f3 60%, #f0f4ff 100%);
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(60, 60, 90, 0.10);
   min-height: 400px;
@@ -11,8 +11,13 @@
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 32px;
-  color: #3e4152;
+  color: #2a2d3a;
   text-align: left;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #6a7cff 0%, #3e4152 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .abtesting-widgets {
   display: flex;
@@ -20,6 +25,30 @@
   gap: 32px;
 }
 .abtesting-widget {
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+/* Modern widget hover effect */
+.abtesting-widget:hover {
+  box-shadow: 0 6px 24px rgba(60,60,90,0.13);
+  transform: translateY(-2px) scale(1.01);
+}
+/* Widget header style */
+.abtesting-widget-header {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #4a4e6a;
+  margin-bottom: 12px;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.abtesting-widget-header::before {
+  content: "\1F4A1";
+  font-size: 1.1em;
+  color: #6a7cff;
+  margin-right: 4px;
+}
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(60,60,90,0.06);

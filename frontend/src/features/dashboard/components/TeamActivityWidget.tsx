@@ -37,13 +37,13 @@ const TeamActivityWidget: React.FC = () => {
       {error && <div className="dashboard-error">{error}</div>}
       {loading ? (
         <div className="dashboard-loader" />
-      ) : (!activity || activity.length === 0) ? (
+      ) : (!Array.isArray(activity) || activity.length === 0) ? (
         <div className="empty-state">
           <p>No team activity data available.</p>
         </div>
       ) : (
         <ul className="team-activity-list">
-          {activity.map((item) => (
+          {Array.isArray(activity) && activity.map((item) => (
             <li key={item.id} className="team-activity-item">
               <span className="team-activity-user">{item.user}</span> {item.action}
               <span className="team-activity-timestamp">{new Date(item.timestamp).toLocaleString()}</span>
