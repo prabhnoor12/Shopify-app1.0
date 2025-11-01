@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaChartBar, FaTachometerAlt, FaBoxOpen, FaSearch, FaFlask, FaUsers, FaBolt, FaStore, FaUser } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 
@@ -21,24 +22,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    // Close sidebar on route change in mobile
-    if (isMobile && isOpen) {
-      onClose();
-    }
-  }, [location.pathname, isMobile, isOpen, onClose]);
 
   const navigationItems = [
-    { path: '/dashboard', label: 'Dashboard' },
-    { path: '/analytics', label: 'Analytics' },
-    { path: '/products', label: 'Products' },
-    { path: '/seo', label: 'SEO' },
-    { path: '/ab-testing', label: 'A/B Testing' },
-    { path: '/team', label: 'Team' },
-    { path: '/usage', label: 'Usage' },
-    { path: '/shop', label: 'Shop ' },
-    { path: '/user', label: 'User' },
-    
+    { path: '/dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
+    { path: '/analytics', label: 'Analytics', icon: <FaChartBar /> },
+    { path: '/products', label: 'Products', icon: <FaBoxOpen /> },
+    { path: '/seo', label: 'SEO', icon: <FaSearch /> },
+    { path: '/ab-testing', label: 'A/B Testing', icon: <FaFlask /> },
+    { path: '/team', label: 'Team', icon: <FaUsers /> },
+    { path: '/usage', label: 'Usage', icon: <FaBolt /> },
+    { path: '/shop', label: 'Shop', icon: <FaStore /> },
+    { path: '/user', label: 'User', icon: <FaUser /> },
   ];
 
   const handleNavigation = (path: string) => {
@@ -53,8 +47,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       )}
 
       <aside className={`sidebar ${isOpen ? 'sidebar-open' : ''} ${isMobile ? 'sidebar-mobile' : ''}`}>
-        <div className="sidebar-header">
-          <h2>Shopify App</h2>
+        <div className="sidebar-header sidebar-gradient">
+          <h2>
+            <FaStore style={{ marginRight: 8, verticalAlign: 'middle' }} /> Shopify App
+          </h2>
           {isMobile && (
             <button className="sidebar-close-btn" onClick={onClose} aria-label="Close sidebar">
               ✕
@@ -73,6 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   onClick={() => handleNavigation(item.path)}
                   aria-label={`Navigate to ${item.label}`}
                 >
+                  <span className="sidebar-nav-icon">{item.icon}</span>
                   <span className="sidebar-nav-text">{item.label}</span>
                 </button>
               </li>

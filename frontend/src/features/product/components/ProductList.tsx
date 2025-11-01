@@ -38,10 +38,12 @@ const ProductList: React.FC = () => {
   }, []);
 
   // Filtering
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(filter.toLowerCase()) ||
-    (product.description && product.description.toLowerCase().includes(filter.toLowerCase()))
-  );
+  const filteredProducts = Array.isArray(products)
+    ? products.filter(product =>
+        product.name.toLowerCase().includes(filter.toLowerCase()) ||
+        (product.description && product.description.toLowerCase().includes(filter.toLowerCase()))
+      )
+    : [];
 
   // Pagination
   const totalPages = Math.ceil(filteredProducts.length / PAGE_SIZE);

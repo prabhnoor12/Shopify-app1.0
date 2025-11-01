@@ -37,7 +37,7 @@ const ProductPerformanceAnalysis: React.FC = () => {
 
   const handleProductSelect = (id: string) => {
     setSelectedProductIds(prev =>
-      prev.includes(id) ? prev.filter(pid => pid !== id) : [...prev, id]
+  prev.includes(id) ? (Array.isArray(prev) ? prev.filter(pid => pid !== id) : []) : [...prev, id]
     );
   };
 
@@ -71,8 +71,8 @@ const ProductPerformanceAnalysis: React.FC = () => {
   // Filter products by name
   const [filter, setFilter] = useState('');
   const filteredProducts = Array.isArray(products)
-    ? products.filter(product => product.name.toLowerCase().includes(filter.toLowerCase()))
-    : [];
+  ? products.filter(product => product.name.toLowerCase().includes(filter.toLowerCase()))
+  : [];
 
   // Export as CSV
   const handleExportCSV = () => {

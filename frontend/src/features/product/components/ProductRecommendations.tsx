@@ -38,17 +38,21 @@ const ProductRecommendations: React.FC = () => {
   }, []);
 
   // Advanced filtering logic
-  const filteredRecommendations = recommendations
-    .filter(rec =>
-      (!filter || rec.name.toLowerCase().includes(filter.toLowerCase())) &&
-      (!category || (rec as any).category === category) &&
-      (!rec.price || (rec.price >= priceRange.min && rec.price <= priceRange.max))
-    )
-    .sort((a, b) => (b.reason?.length ?? 0) - (a.reason?.length ?? 0)) // Example: prioritize by reason length
-    .slice(0, 8); // Show top 8 recommendations
+  const filteredRecommendations = Array.isArray(recommendations)
+    ? recommendations
+        .filter((rec: Recommendation) =>
+          (!filter || rec.name.toLowerCase().includes(filter.toLowerCase())) &&
+          (!category || (rec as any).category === category) &&
+          (!rec.price || (rec.price >= priceRange.min && rec.price <= priceRange.max))
+        )
+        .sort((a: Recommendation, b: Recommendation) => (b.reason?.length ?? 0) - (a.reason?.length ?? 0))
+        .slice(0, 8)
+    : [];
 
   // Extract categories from all products
-  const categories = Array.from(new Set(allProducts.map(p => (p as any).category).filter(Boolean)));
+  const categories = Array.isArray(allProducts)
+    ? Array.from(new Set(allProducts.map(p => (p as any).category).filter(Boolean)))
+    : [];
 
   if (loading) return <div className="product-recommendations-loading">Loading recommendations...</div>;
   if (error) return <div className="product-recommendations-error">{error}</div>;
