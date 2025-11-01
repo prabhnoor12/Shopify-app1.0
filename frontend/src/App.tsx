@@ -27,7 +27,6 @@ const AppLayout: React.FC = () => {
   // Parse URL params for user info and store in localStorage
   useEffect(() => {
     // Improved: parse both search and hash fragments for params
-
     const getParams = () => {
       let params = new URLSearchParams(window.location.search);
       // If not found, try hash fragment (for some OAuth flows)
@@ -37,28 +36,70 @@ const AppLayout: React.FC = () => {
           params = hashParams;
         }
       }
+      // Collect all keys and values from the backend URL
+      const allKeys = Array.from(params.keys());
+      const allValues: Record<string, string | null> = {};
+      allKeys.forEach((key: string) => {
+        allValues[key] = params.get(key);
+      });
+      // Expected keys
+      const expectedKeys = ['shop', 'user_id', 'access_token'];
+      const altKeys = ['userId', 'accessToken'];
+      // Find missing and mismatched keys
+      const missingKeys = expectedKeys.filter(k => !params.has(k) && !(altKeys.includes(k)));
+      const mismatchedKeys = allKeys.filter(k => !expectedKeys.includes(k) && !altKeys.includes(k));
       return {
         shop: params.get('shop'),
         user_id: params.get('user_id') || params.get('userId'),
         access_token: params.get('access_token') || params.get('accessToken'),
+        allKeys,
+        allValues,
+        missingKeys,
+        mismatchedKeys
       };
     };
 
-    const { shop, user_id, access_token } = getParams();
+    const { shop, user_id, access_token, allKeys, allValues, missingKeys, mismatchedKeys } = getParams();
 
-    // Debug log for troubleshooting
-    if (!shop || !user_id || !access_token) {
-      console.warn('Missing OAuth params:', { shop, user_id, access_token });
+    // Enhanced debug logging
+    console.group('[Auth Debug] Step 1: URL Parameter Parsing');
+    console.log('window.location.search:', window.location.search);
+    console.log('window.location.hash:', window.location.hash);
+    console.log('All keys from backend URL:', allKeys);
+    console.log('All values from backend URL:', allValues);
+    console.log('Parsed (used) values:', { shop, user_id, access_token });
+    if (missingKeys.length > 0) {
+      console.warn('Missing expected keys:', missingKeys);
     }
-
-    // Check for value mismatches (e.g., backend sends shop_domain, frontend expects shop)
-    // You can add more checks here if backend param names differ
+    if (mismatchedKeys.length > 0) {
+      console.warn('Unexpected/mismatched keys in URL:', mismatchedKeys);
+    }
+    if (!shop) {
+      console.warn('Missing "shop" param. Backend should send ?shop=SHOP_DOMAIN');
+    }
+    if (!user_id) {
+      console.warn('Missing "user_id"/"userId" param. Backend should send ?userId=USER_ID');
+    }
+    if (!access_token) {
+      console.warn('Missing "access_token"/"accessToken" param. Backend should send ?accessToken=TOKEN');
+    }
+    if (typeof shop !== 'string' || typeof user_id !== 'string' || typeof access_token !== 'string') {
+      console.error('One or more params are not strings:', { shop, user_id, access_token });
+    }
+    console.groupEnd();
 
     if (shop && user_id && access_token) {
       localStorage.setItem('shop', shop);
       localStorage.setItem('user_id', user_id);
       localStorage.setItem('access_token', access_token);
       window.history.replaceState({}, document.title, window.location.pathname);
+      console.group('[Auth Debug] Step 2: Saved to localStorage');
+      console.log('Auth info saved:', { shop, user_id, access_token });
+      console.groupEnd();
+    } else {
+      console.group('[Auth Debug] Step 2: Save to localStorage FAILED');
+      console.warn('Auth info NOT saved. Check previous warnings for missing values.');
+      console.groupEnd();
     }
   }, []);
 
@@ -66,10 +107,17 @@ const AppLayout: React.FC = () => {
   const shop = localStorage.getItem('shop');
   const userId = localStorage.getItem('user_id');
   const accessToken = localStorage.getItem('access_token');
-  // Debug log for troubleshooting
+  // Enhanced debug log for localStorage
+  console.group('[Auth Debug] Step 3: LocalStorage Retrieval');
+  console.log('LocalStorage values:', { shop, userId, accessToken });
   if (!shop || !userId || !accessToken) {
-    console.warn('LocalStorage missing auth info:', { shop, userId, accessToken });
+    console.warn('LocalStorage missing auth info. Possible causes:');
+    console.warn('- OAuth redirect did not include all required params');
+    console.warn('- localStorage was cleared or blocked');
+    console.warn('- URL param names do not match expected keys');
+    console.warn('Check backend redirect and browser privacy settings.');
   }
+  console.groupEnd();
 
   return (
     <div className="app-layout">
