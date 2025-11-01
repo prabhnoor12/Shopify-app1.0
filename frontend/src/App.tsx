@@ -26,16 +26,38 @@ const AppLayout: React.FC = () => {
 
   // Parse URL params for user info and store in localStorage
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const shop = params.get('shop');
-    const userId = params.get('user_id');
-    const accessToken = params.get('access_token');
+    // Improved: parse both search and hash fragments for params
 
-    if (shop && userId && accessToken) {
+    const getParams = () => {
+      let params = new URLSearchParams(window.location.search);
+      // If not found, try hash fragment (for some OAuth flows)
+      if (!params.has('shop') || !(params.has('user_id') || params.has('userId')) || !(params.has('access_token') || params.has('accessToken'))) {
+        if (window.location.hash) {
+          const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, '?'));
+          params = hashParams;
+        }
+      }
+      return {
+        shop: params.get('shop'),
+        user_id: params.get('user_id') || params.get('userId'),
+        access_token: params.get('access_token') || params.get('accessToken'),
+      };
+    };
+
+    const { shop, user_id, access_token } = getParams();
+
+    // Debug log for troubleshooting
+    if (!shop || !user_id || !access_token) {
+      console.warn('Missing OAuth params:', { shop, user_id, access_token });
+    }
+
+    // Check for value mismatches (e.g., backend sends shop_domain, frontend expects shop)
+    // You can add more checks here if backend param names differ
+
+    if (shop && user_id && access_token) {
       localStorage.setItem('shop', shop);
-      localStorage.setItem('user_id', userId);
-      localStorage.setItem('access_token', accessToken);
-      // Clean up URL
+      localStorage.setItem('user_id', user_id);
+      localStorage.setItem('access_token', access_token);
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
@@ -44,6 +66,10 @@ const AppLayout: React.FC = () => {
   const shop = localStorage.getItem('shop');
   const userId = localStorage.getItem('user_id');
   const accessToken = localStorage.getItem('access_token');
+  // Debug log for troubleshooting
+  if (!shop || !userId || !accessToken) {
+    console.warn('LocalStorage missing auth info:', { shop, userId, accessToken });
+  }
 
   return (
     <div className="app-layout">
