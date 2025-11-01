@@ -33,7 +33,7 @@ const ProductShopifySync: React.FC = () => {
       {success && <div className="success-msg">{success}</div>}
       {error && <div className="error-msg">{error}</div>}
       <div className="product-list">
-        {products.length > 0 ? (
+        {Array.isArray(products) && products.length > 0 ? (
           <ul>
             {products.map((product) => (
               <li key={product.id}>{product.title}</li>

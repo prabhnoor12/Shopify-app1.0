@@ -61,7 +61,7 @@ const TeamTransferOwnership: React.FC<TransferProps> = ({ teamId }) => {
     };
   }, [success]);
 
-  const isDisabled = !!ownerError || !newOwnerId || !users.length || loading;
+  const isDisabled = !!ownerError || !newOwnerId || !Array.isArray(users) || users.length === 0 || loading;
 
   return (
     <Card>
@@ -70,12 +70,12 @@ const TeamTransferOwnership: React.FC<TransferProps> = ({ teamId }) => {
         <div className="team-transfer-fields">
           <Select
             label="New Owner"
-            options={users.length ? users.map(u => ({ label: u.email || u.name || u.id, value: String(u.id) })) : [{ label: 'No users available', value: '' }]}
+            options={Array.isArray(users) && users.length ? users.map(u => ({ label: u.email || u.name || u.id, value: String(u.id) })) : [{ label: 'No users available', value: '' }]}
             value={newOwnerId}
             onChange={v => { setNewOwnerId(v); setOwnerTouched(true); }}
             error={ownerError}
             onBlur={() => setOwnerTouched(true)}
-            disabled={!users.length || loading}
+            disabled={!Array.isArray(users) || users.length === 0 || loading}
             requiredIndicator
             aria-label="New Owner Selection"
             aria-invalid={!!ownerError}

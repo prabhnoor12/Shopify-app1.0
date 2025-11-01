@@ -55,7 +55,7 @@ const TeamCreate: React.FC<TeamCreateProps> = ({ onTeamCreated }) => {
 			setError('Please enter an owner name');
 			return;
 		}
-		if (!roles.length || roles.some(r => !r.name.trim())) {
+		if (!Array.isArray(roles) || roles.length === 0 || roles.some(r => !r.name.trim())) {
 			setError('Please add at least one role and provide names for all roles.');
 			return;
 		}
@@ -126,7 +126,7 @@ const TeamCreate: React.FC<TeamCreateProps> = ({ onTeamCreated }) => {
 					/>
 					<div className="team-create-roles">
 						<h3 className="team-create-roles-title">Roles & Permissions</h3>
-									{roles.map((role, idx) => (
+									{Array.isArray(roles) && roles.map((role, idx) => (
 										<div key={idx} className="team-create-role-block">
 											<TextField
 												label={`Role Name`}
@@ -139,7 +139,7 @@ const TeamCreate: React.FC<TeamCreateProps> = ({ onTeamCreated }) => {
 											<div className="team-create-role-perms">
 												<span className="team-create-role-perms-label">Permissions:</span>
 												<div className="team-create-role-perms-list">
-													{role.permissions.map((perm) => (
+													{Array.isArray(role.permissions) && role.permissions.map((perm) => (
 														<span key={perm} className="team-create-role-perms-item">
 															{perm}
 														</span>

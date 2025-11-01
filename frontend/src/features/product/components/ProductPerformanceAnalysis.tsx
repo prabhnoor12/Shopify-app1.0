@@ -70,9 +70,9 @@ const ProductPerformanceAnalysis: React.FC = () => {
 
   // Filter products by name
   const [filter, setFilter] = useState('');
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredProducts = Array.isArray(products)
+    ? products.filter(product => product.name.toLowerCase().includes(filter.toLowerCase()))
+    : [];
 
   // Export as CSV
   const handleExportCSV = () => {
@@ -108,7 +108,7 @@ const ProductPerformanceAnalysis: React.FC = () => {
           className="ppa-filter"
         />
         <div className="ppa-product-list">
-          {filteredProducts.map(product => (
+          {Array.isArray(filteredProducts) && filteredProducts.map(product => (
             <label key={product.id} className="ppa-product-item">
               <input
                 type="checkbox"

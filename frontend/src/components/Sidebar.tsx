@@ -38,7 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     { path: '/usage', label: 'Usage' },
     { path: '/shop', label: 'Shop ' },
     { path: '/user', label: 'User' },
-    { path: '/subscription', label: 'Subscription' },
+    
   ];
 
   const handleNavigation = (path: string) => {

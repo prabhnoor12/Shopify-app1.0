@@ -72,7 +72,7 @@ const TeamInvite: React.FC<InviteProps> = ({ teamId }) => {
     setLoading(false);
   };
 
-  const isDisabled = !!emailError || !!roleError || !email.trim() || !roleId || !roles.length || loading;
+  const isDisabled = !!emailError || !!roleError || !email.trim() || !roleId || !Array.isArray(roles) || roles.length === 0 || loading;
 
   return (
     <Card>
@@ -94,12 +94,12 @@ const TeamInvite: React.FC<InviteProps> = ({ teamId }) => {
           />
           <Select
             label="Role"
-            options={roles.length ? roles.map(r => ({ label: r.name, value: String(r.id) })) : [{ label: 'No roles available', value: '' }]}
+            options={Array.isArray(roles) && roles.length ? roles.map(r => ({ label: r.name, value: String(r.id) })) : [{ label: 'No roles available', value: '' }]}
             value={roleId}
             onChange={v => { setRoleId(v); setRoleTouched(true); }}
             error={roleError}
             onBlur={() => setRoleTouched(true)}
-            disabled={!roles.length || loading}
+            disabled={!Array.isArray(roles) || roles.length === 0 || loading}
             requiredIndicator
             aria-label="Role Selection"
             aria-invalid={!!roleError}

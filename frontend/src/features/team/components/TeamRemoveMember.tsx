@@ -81,20 +81,20 @@ const TeamRemoveMember: React.FC<RemoveProps> = ({ teamId: propTeamId, userId: p
         <div className="team-remove-fields">
           <Select
             label="Select Team"
-            options={teams.length ? teams.map(t => ({ label: t.name || t.id, value: String(t.id) })) : [{ label: 'No teams available', value: '' }]}
+            options={Array.isArray(teams) && teams.length ? teams.map(t => ({ label: t.name || t.id, value: String(t.id) })) : [{ label: 'No teams available', value: '' }]}
             value={selectedTeamId}
             onChange={v => setSelectedTeamId(v)}
-            disabled={!teams.length || loading}
+            disabled={!Array.isArray(teams) || teams.length === 0 || loading}
             requiredIndicator
             // required
             aria-label="Select Team"
           />
           <Select
             label="Select Member"
-            options={members.length ? members.map(m => ({ label: m.email || m.name || m.id, value: String(m.id) })) : [{ label: 'No members available', value: '' }]}
+            options={Array.isArray(members) && members.length ? members.map(m => ({ label: m.email || m.name || m.id, value: String(m.id) })) : [{ label: 'No members available', value: '' }]}
             value={selectedUserId}
             onChange={v => setSelectedUserId(v)}
-            disabled={!members.length || loading || !selectedTeamId}
+            disabled={!Array.isArray(members) || members.length === 0 || loading || !selectedTeamId}
             requiredIndicator
             // required
             aria-label="Select Member to Remove"

@@ -110,23 +110,23 @@ const TeamMemberRole: React.FC<RoleProps> = ({ userId, teamId: propTeamId }) => 
         <div className="team-role-fields">
           <Select
             label="Team"
-            options={teams.length ? teams.map(t => ({ label: t.name, value: String(t.id) })) : [{ label: 'No teams available', value: '' }]}
+            options={Array.isArray(teams) && teams.length ? teams.map(t => ({ label: t.name, value: String(t.id) })) : [{ label: 'No teams available', value: '' }]}
             value={teamId}
             onChange={v => { setTeamId(v); setRoleTouched(false); setRoleId(''); setPermissions([]); }}
             error={teamError}
-            disabled={!teams.length || loading}
+            disabled={!Array.isArray(teams) || teams.length === 0 || loading}
             requiredIndicator
             aria-label="Team Selection"
             aria-invalid={!!teamError}
           />
           <Select
             label="Role"
-            options={roles.length ? roles.map(r => ({ label: r.name, value: String(r.id) })) : [{ label: 'No roles available', value: '' }]}
+            options={Array.isArray(roles) && roles.length ? roles.map(r => ({ label: r.name, value: String(r.id) })) : [{ label: 'No roles available', value: '' }]}
             value={roleId}
             onChange={v => { setRoleId(v); setRoleTouched(true); }}
             error={roleError}
             onBlur={() => setRoleTouched(true)}
-            disabled={!roles.length || loading}
+            disabled={!Array.isArray(roles) || roles.length === 0 || loading}
             requiredIndicator
             aria-label="Role Selection"
             aria-invalid={!!roleError}
@@ -134,7 +134,7 @@ const TeamMemberRole: React.FC<RoleProps> = ({ userId, teamId: propTeamId }) => 
           <div className="team-role-permissions">
             <label>Permissions</label>
             <div className="team-role-perms-list">
-              {permissions.map(perm => (
+              {Array.isArray(permissions) && permissions.map(perm => (
                 <span key={perm} className="team-role-perms-item">
                   {perm}
                   <Button size="micro" tone="critical" onClick={() => handleRemovePermission(perm)}>

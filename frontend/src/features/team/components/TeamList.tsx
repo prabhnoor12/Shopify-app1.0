@@ -30,7 +30,7 @@ const TeamList: React.FC = () => {
         <div className="teamlist-spinner"><Spinner accessibilityLabel="Loading teams" size="large" /></div>
       ) : error ? (
         <InlineError message={error} fieldID="teamlist-error" />
-      ) : teams.length === 0 ? (
+  ) : !Array.isArray(teams) || teams.length === 0 ? (
         <div className="teamlist-empty" role="status">You are not a member of any teams yet.</div>
       ) : (
         <table className="teamlist-table" aria-label="Team list">
@@ -43,11 +43,11 @@ const TeamList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {teams.map(team => (
+            {Array.isArray(teams) && teams.map(team => (
               <tr key={team.id}>
                 <td>{team.name}</td>
                 <td>{team.owner_id}</td>
-                <td>{team.members?.length ?? 0}</td>
+                <td>{Array.isArray(team.members) ? team.members.length : 0}</td>
                 <td>{team.created_at ? new Date(team.created_at).toLocaleDateString() : ''}</td>
               </tr>
             ))}

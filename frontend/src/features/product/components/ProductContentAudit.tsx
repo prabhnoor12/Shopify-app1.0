@@ -27,9 +27,9 @@ const ProductContentAudit: React.FC = () => {
   }, []);
 
   // Filter products by name
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredProducts = Array.isArray(products)
+    ? products.filter(product => product.name.toLowerCase().includes(filter.toLowerCase()))
+    : [];
 
   const handleProductSelect = (id: string) => {
     setSelectedProductIds(prev =>
@@ -93,10 +93,12 @@ const ProductContentAudit: React.FC = () => {
   };
 
   // Show only products with poor scores
-  const poorProducts = filteredProducts.filter(p => {
-    const r = auditResults[p.id];
-    return r && (r.seoScore < 50 || r.readability < 50);
-  });
+  const poorProducts = Array.isArray(filteredProducts)
+    ? filteredProducts.filter(p => {
+        const r = auditResults[p.id];
+        return r && (r.seoScore < 50 || r.readability < 50);
+      })
+    : [];
 
   return (
     <div className="product-content-audit">
@@ -110,7 +112,7 @@ const ProductContentAudit: React.FC = () => {
           className="audit-filter"
         />
         <div className="audit-product-list">
-          {filteredProducts.map(product => (
+          {Array.isArray(filteredProducts) && filteredProducts.map(product => (
             <label key={product.id} className="audit-product-item">
               <input
                 type="checkbox"
@@ -203,7 +205,7 @@ const ProductContentAudit: React.FC = () => {
         <div className="audit-poor-products">
           <h4>Products needing attention:</h4>
           <ul>
-            {poorProducts.map(p => <li key={p.id}>{p.name}</li>)}
+            {Array.isArray(poorProducts) && poorProducts.map(p => <li key={p.id}>{p.name}</li>)}
           </ul>
         </div>
       )}
