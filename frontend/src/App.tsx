@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './reactQueryClient';
 
@@ -20,28 +20,6 @@ import UserRouter from './features/user/UserRouter';
 
 import './App.css';
 import { CookieBanner, PrivacyPolicy } from './features/privacy/components';
-// Simple landing page for user navigation
-const LandingPage: React.FC = () => {
-  const navigate = useNavigate();
-  return (
-    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-      <h2>Welcome!</h2>
-      <p>Select where you want to go:</p>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', marginTop: '1rem' }}>
-        <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-        <button onClick={() => navigate('/analytics')}>Analytics</button>
-        <button onClick={() => navigate('/products')}>Products</button>
-        <button onClick={() => navigate('/seo')}>SEO</button>
-        <button onClick={() => navigate('/ab-testing')}>A/B Testing</button>
-        <button onClick={() => navigate('/team')}>Team</button>
-        <button onClick={() => navigate('/usage')}>Usage</button>
-        <button onClick={() => navigate('/shop')}>Shop</button>
-        <button onClick={() => navigate('/user')}>User</button>
-        <button onClick={() => navigate('/privacy-policy')}>Privacy Policy</button>
-      </div>
-    </div>
-  );
-};
 
 const AppLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -103,7 +81,7 @@ const AppLayout: React.FC = () => {
             <Route path="/shop/*" element={<ShopRouter />} />
             <Route path="/user/*" element={<UserRouter />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/" element={<LandingPage />} />
+            <Route path="*" element={<DashboardRouter />} />
           </Routes>
         </div>
       </div>
