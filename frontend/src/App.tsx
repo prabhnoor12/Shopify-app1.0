@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './reactQueryClient';
@@ -22,6 +22,28 @@ import './App.css';
 import { CookieBanner, PrivacyPolicy } from './features/privacy/components';
 const AppLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Parse URL params for user info and store in localStorage
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const shop = params.get('shop');
+    const userId = params.get('user_id');
+    const accessToken = params.get('access_token');
+
+    if (shop && userId && accessToken) {
+      localStorage.setItem('shop', shop);
+      localStorage.setItem('user_id', userId);
+      localStorage.setItem('access_token', accessToken);
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
+  // Retrieve from localStorage for authentication/backend usage
+  const shop = localStorage.getItem('shop');
+  const userId = localStorage.getItem('user_id');
+  const accessToken = localStorage.getItem('access_token');
+
   return (
     <div className="app-layout">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -38,6 +60,15 @@ const AppLayout: React.FC = () => {
           </button>
         )}
         <div className="app-content">
+          {/* Show user info if available */}
+          {shop && userId && accessToken ? (
+            <div style={{ marginBottom: '1rem', background: '#f6f6f6', padding: '0.5rem', borderRadius: '4px' }}>
+              <strong>Authenticated as:</strong> {shop}<br />
+              <strong>User ID:</strong> {userId}
+            </div>
+          ) : (
+            <div style={{ marginBottom: '1rem', color: 'red' }}>Not authenticated</div>
+          )}
           <Routes>
             <Route path="/dashboard/*" element={<DashboardRouter />} />
             <Route path="/analytics/*" element={<AnalyticsRouter />} />
@@ -55,7 +86,7 @@ const AppLayout: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 
 const AppContent: React.FC = () => {
